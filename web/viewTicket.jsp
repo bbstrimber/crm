@@ -158,9 +158,9 @@
                         for(CommentBean comment : comments){
                             if(request.getSession().getAttribute("Client") == null || comment.getClientView().equals("true")){
                     %>
-                        <p><%=comment.getComment()%></p>
-                        <p> -<%=comment.getAuthor() %> </p><p><%= comment.getDate() %></p>
-                        
+                            <p><%=comment.getComment()%></p>
+                            <p> -<%=comment.getAuthor() %> </p>
+                            <p><%= df.format(comment.getDate()) %></p>
                     <%          
                             }
                         }
