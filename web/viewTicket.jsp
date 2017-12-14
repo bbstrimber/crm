@@ -19,19 +19,7 @@
         <title>View Ticket</title>
     </head>
     <body>
-        <% 
-           TicketBean ticket = (TicketBean)request.getAttribute("ticket");
-           java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm"); 
-            String headerColspan = "8";
-            String commentsColspan = "7";
-            if(request.getSession().getAttribute("Developer") != null){
-                headerColspan = "9";
-            }
-            if(request.getSession().getAttribute("Admin") != null){
-                headerColspan="10";
-                commentsColspan="8";
-            }
-        %>
+        
         <script language="javascript">
             
             function showHideSelect()
@@ -57,6 +45,19 @@
             }
         </script>
         
+        <% 
+           TicketBean ticket = (TicketBean)request.getAttribute("ticket");
+           java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm"); 
+            String headerColspan = "8";
+            String commentsColspan = "7";
+            if(request.getSession().getAttribute("Developer") != null){
+                headerColspan = "9";
+            }
+            if(request.getSession().getAttribute("Admin") != null){
+                headerColspan="10";
+                commentsColspan="8";
+            }
+        %>
         <table id="ticketList" border="1" align="center" onload="checkResolved()">
             <thead>
                 <tr>
