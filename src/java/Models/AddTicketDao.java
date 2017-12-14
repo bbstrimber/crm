@@ -1,0 +1,61 @@
+package Models;
+
+
+
+import java.io.InputStream;
+import utils.DBConnection;
+import utils.TicketBean;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Code Blue
+ */
+public class AddTicketDao {
+    
+    public void addTicket(TicketBean addTicketBean) 
+    {
+        String senderName = addTicketBean.getSenderName(); 
+        String title = addTicketBean.getTitle();
+        String content = addTicketBean.getContent();
+        String status = addTicketBean.getStatus();
+        String developer = addTicketBean.getDeveloper();
+        InputStream input = addTicketBean.getAttachment();
+        String attachmentName = addTicketBean.getAttachmentName();
+        
+        Connection con = null;
+        PreparedStatement updateStatement = null;
+        
+        try 
+        {
+            
+            con = DBConnection.createConnection();
+            
+            updateStatement = con.prepareStatement("INSERT INTO tickets (sender_name, title, content, status, developer, attachment, attachment_name) values (?, ?, ?, ?, ?, ?, ?)");
+            updateStatement.setString(1, senderName);
+            updateStatement.setString(2, title);
+            updateStatement.setString(3, content);
+            updateStatement.setString(4, status);
+            updateStatement.setString(5, developer);
+            updateStatement.setBinaryStream(6, input);
+            updateStatement.setString(7, attachmentName);
+            
+            updateStatement.executeUpdate();
+            
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            
+        } 
+    }
+    
+}
