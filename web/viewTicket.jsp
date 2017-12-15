@@ -129,7 +129,7 @@
                     <td>
                         <%if(ticket.getDeveloper().equals("Not Assigned")){ %>
                         <form action="UpdateTicketServlet" method="POST" id="assignForm">
-                            <input type="hidden" name="id" value=<%=ticket.getId()%>/>
+                            <input type="hidden" name="id" value=<%=ticket.getId()%>>
                             <input type="checkbox" id="assign" name="assign" onchange="showHideSelect()"/> Assign to Developer
                             <select id="developerList" name="developer" style="display:none">
                                 <option disabled selected>Assign to Developer</option>
