@@ -25,6 +25,7 @@
                     <th>Username</th>
                     <th>Password</th>
                     <th>User Type</th>
+                    <th>Company Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +39,7 @@
                     <td><%= user.getUsername()%></td>
                     <td><%= user.getPassword()%></td>
                     <td><%= user.getUserType()%></td>
+                    <td><%= user.getCompany()%></td>
                 </tr>
                 <% } %>
             </tbody>

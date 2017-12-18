@@ -18,6 +18,7 @@ public class UserBean implements Serializable
     private String username;
     private String password;
     private String userType;
+    private String company;
     
     public int getId() {
         return id;
@@ -44,6 +45,14 @@ public class UserBean implements Serializable
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }
  

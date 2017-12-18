@@ -34,7 +34,7 @@ public class DisplayUsersDao {
         try
         {
             con = DBConnection.createConnection();
-            statement = con.prepareStatement("SELECT * FROM users");
+            statement = con.prepareStatement("SELECT users.*, companies.name FROM users JOIN companies ON users.company_id = companies.id ORDER BY users.id ASC");
             
             rs = statement.executeQuery(); 
             while(rs.next()){
@@ -43,6 +43,7 @@ public class DisplayUsersDao {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setUserType(rs.getString("user_type"));
+                user.setCompany(rs.getString("name"));
                 users.add(user);
             }
         }
