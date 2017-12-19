@@ -15,7 +15,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css">
-
+        <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
         <title>Admin</title>
     </head>
     <body>
@@ -171,7 +171,7 @@
                         <td> <input type="file" name="attachment" </td>
                     </tr>
                     <tr>
-                        <td><input type="submit" value="submit" name="submit" /></td>
+                        <td><button class="btn btn-primary" type="submit"  name="submit">Submit</button></td>
                     </tr>
                 </form>
             </tbody>

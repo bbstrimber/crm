@@ -10,28 +10,42 @@ and open the template in the editor.
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
         <title>Code Blue CRM Login Page</title>
-        <script> 
-        function validate()
-        { 
-            var username = document.form.username.value; 
-            var password = document.form.password.value;
-            if (username==null || username=="")
-            { 
-                alert("Username cannot be blank"); 
-                return false; 
-            }
-            else if(password==null || password=="")
-            { 
-                alert("Password cannot be blank"); 
-                return false; 
-            } 
-        }
-        </script> 
+        
     </head>
     <body>
-        <div style="text-align:center"><h1>Code Blue CRM </h1> </div>
+        <div class="jumbotron">
+            <h2 class="display-3">CodeBlue CRM</h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div id="formAlert" class="alert hide">  
+                        <a class="close">×</a>  
+                         Make sure all fields are filled and try again.
+                    </div>
+                    <form action="LoginServlet" method="post" class="form-horizontal">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Username"/>
+                        </div>
+                        <div class="input-group ">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
+                        </div>
+                        <hr/>
+                        <span style="color:red"><%=(request.getAttribute("errMessage") == null) ? "": request.getAttribute("errMessage")%></span>
+                        <button type="submit" class="form-control">Submit</button>
+                    </form>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+        
+        <!--<div style="text-align:center"><h1>Code Blue CRM </h1> </div>
         <br>
         <form name="form" action="LoginServlet" method="post" onsubmit="return validate()">
             <table align="center">
@@ -54,6 +68,8 @@ and open the template in the editor.
                     </td>
                 </tr>
             </table>
-        </form>
+        </form>-->
+        <script src="Bootstrap/js/jquery-3.2.1.min.js"></script>
+        <script src="Bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
