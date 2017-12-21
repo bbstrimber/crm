@@ -76,12 +76,12 @@ public class AddTicketServlet extends HttpServlet {
 
             addTicketDao.addTicket(ticketBean);
             request.setAttribute("newTicket", title);
-            request.getRequestDispatcher("DisplayTicketsServlet").forward(request, response);
+            request.getRequestDispatcher("Home").forward(request, response);
         }
         else
         {
             request.setAttribute("failAdd", title);
-            request.getRequestDispatcher("DisplayTicketsServlet").forward(request, response);
+            request.getRequestDispatcher("DisplayTickets").forward(request, response);
         }
         
     }

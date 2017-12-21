@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Code Blue
  */
-@WebServlet(urlPatterns = {"/AddUserServlet"})
+@WebServlet(urlPatterns = {"/AddUser"})
 public class AddUserServlet extends HttpServlet {
 
     /**
@@ -56,7 +56,7 @@ public class AddUserServlet extends HttpServlet {
             {
                 request.setAttribute("fail", username);
             }
-            request.getRequestDispatcher("DisplayTicketsServlet").forward(request, response);
+            request.getRequestDispatcher("DisplayUsers").forward(request, response);
             
         }
     

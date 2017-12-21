@@ -9,10 +9,7 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
+        <%@ include file="header.jspf" %> 
         <title>Code Blue CRM Login Page</title>
         
     </head>
@@ -23,10 +20,7 @@ and open the template in the editor.
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
-                    <div id="formAlert" class="alert hide">  
-                        <a class="close">×</a>  
-                         Make sure all fields are filled and try again.
-                    </div>
+                    
                     <form action="LoginServlet" method="post" class="form-horizontal">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -69,7 +63,6 @@ and open the template in the editor.
                 </tr>
             </table>
         </form>-->
-        <script src="Bootstrap/js/jquery-3.2.1.min.js"></script>
-        <script src="Bootstrap/js/bootstrap.min.js"></script>
+        <%@ include file="footer.jspf" %> 
     </body>
 </html>

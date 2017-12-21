@@ -1,13 +1,11 @@
-package Controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controllers;
 
-import Models.DisplayUsersDao;
-import utils.UserBean;
+import Models.DisplayCompaniesDao;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -15,13 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.CompanyBean;
 
 /**
  *
- * @author Code Blue
+ * @author Blumie
  */
-@WebServlet(urlPatterns = {"/DisplayUsers"})
-public class DisplayUsersServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/DisplayCompanies"})
+public class DisplayCompaniesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,15 +34,13 @@ public class DisplayUsersServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        DisplayUsersDao displayUsersDao = new DisplayUsersDao();
+        DisplayCompaniesDao displayCompaniesDao = new DisplayCompaniesDao();
         
-        List<UserBean> users = displayUsersDao.displayUsers();
-        
-        
-        request.setAttribute("users", users); 
-        request.getRequestDispatcher("/userList.jsp").forward(request, response);
+        List<CompanyBean> companies = displayCompaniesDao.displayCompanies();
         
         
+        request.setAttribute("companies", companies); 
+        request.getRequestDispatcher("/companyList.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

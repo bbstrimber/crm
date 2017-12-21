@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Code Blue
  */
-@WebServlet(urlPatterns = {"/DisplayTicketsServlet"})
+@WebServlet(urlPatterns = {"/DisplayTickets"})
 public class DisplayTicketsServlet extends HttpServlet {
 
     /**
@@ -35,9 +35,9 @@ public class DisplayTicketsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String sort = "FIELD(status, 'new') DESC, id";
+        String sort = "id";
         String where = "1=1";
-        String username = (String) request.getSession().getAttribute("Admin");
+        String username;
         
         if(request.getSession().getAttribute("Developer") != null){
             sort = " FIELD(status, 'Assigned') DESC,  id ";
@@ -79,14 +79,14 @@ public class DisplayTicketsServlet extends HttpServlet {
         request.setAttribute("ticketList", tickets); 
         
         if(request.getSession().getAttribute("Developer") != null){
-            request.getRequestDispatcher("/developer.jsp").forward(request, response);
+            request.getRequestDispatcher("/ticketList.jsp").forward(request, response);
         }
         else if(request.getSession().getAttribute("Client") != null){
-            request.getRequestDispatcher("/client.jsp").forward(request, response);
+            request.getRequestDispatcher("/ticketList.jsp").forward(request, response);
         }
         else{
             request.setAttribute("developers", developers);
-            request.getRequestDispatcher("/admin.jsp").forward(request, response);
+            request.getRequestDispatcher("/ticketList.jsp").forward(request, response);
         }
 
     }

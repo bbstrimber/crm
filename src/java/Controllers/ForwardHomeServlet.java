@@ -1,15 +1,11 @@
-package Controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controllers;
 
-import Models.DisplayUsersDao;
-import utils.UserBean;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Code Blue
+ * @author Blumie
  */
-@WebServlet(urlPatterns = {"/DisplayUsers"})
-public class DisplayUsersServlet extends HttpServlet {
+
+@WebServlet(urlPatterns = {"/Home"})
+public class ForwardHomeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,15 +32,18 @@ public class DisplayUsersServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        DisplayUsersDao displayUsersDao = new DisplayUsersDao();
-        
-        List<UserBean> users = displayUsersDao.displayUsers();
-        
-        
-        request.setAttribute("users", users); 
-        request.getRequestDispatcher("/userList.jsp").forward(request, response);
-        
-        
+        if(request.getSession().getAttribute("Admin") != null)
+        {
+            request.getRequestDispatcher("/admin.jsp").forward(request, response);
+        }
+        else if(request.getSession().getAttribute("Developer") != null)
+        {
+            request.getRequestDispatcher("/developer.jsp").forward(request, response);
+        }
+        else
+        {
+            request.getRequestDispatcher("/client.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

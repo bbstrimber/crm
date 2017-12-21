@@ -50,10 +50,10 @@ public class LoginServlet extends HttpServlet {
         if(userValidate.equals("admin"))
         {
             System.out.println("Admin's Home");
-            HttpSession session = request.getSession(); //Creating a session
-            session.setAttribute("Admin", username); //setting session attribute
+            HttpSession session = request.getSession();
+            session.setAttribute("Admin", username); 
             request.setAttribute("userName", username);
-            request.getRequestDispatcher("DisplayTicketsServlet").forward(request, response);
+            request.getRequestDispatcher("/admin.jsp").forward(request, response);
         }
         else if(userValidate.equals("developer"))
         {
@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("Developer", username);
             request.setAttribute("userName", username);
-            request.getRequestDispatcher("DisplayTicketsServlet").forward(request, response);
+            request.getRequestDispatcher("/developer.jsp").forward(request, response);
         }
         else if(userValidate.equals("client"))
         {
@@ -69,7 +69,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("Client", username);
             request.setAttribute("userName", username);
-            request.getRequestDispatcher("DisplayTicketsServlet").forward(request, response);
+            request.getRequestDispatcher("/client.jsp").forward(request, response);
         }
         else
         {

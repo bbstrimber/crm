@@ -12,13 +12,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <%@ include file="header.jspf" %> 
         <title>Client Home</title>
     </head>
     <body>
-        
-         <%java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); %>
+        <%@ include file="navbar.jspf" %>
         <h1>Welcome <%=request.getSession().getAttribute("Client") %>!</h1>
         
         <br/>
@@ -38,45 +36,6 @@
         <% } %>
 
         </br>
-        
-        <table id="ticketList" border="1" align="center">
-            <thead>
-                <tr>
-                    <th colspan="6">Your tickets</th>
-                </tr>
-                <tr>
-                    <th><a href="DisplayTicketsServlet?sort=id">Id</a></th>
-                    <th><a href="DisplayTicketsServlet?sort=date">Date</a></th>
-                    <th><a href="DisplayTicketsServlet?sort=title">Title</a></th>
-                    <th><a href="DisplayTicketsServlet?sort=status">Status</a></th>
-                    <th><a href="DisplayTicketsServlet?sort=developer">Developer</a></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <% List<TicketBean> tickets = new ArrayList<TicketBean>();
-                   tickets = (ArrayList<TicketBean>) request.getAttribute("ticketList");
-                   for(TicketBean ticket : tickets){
-                %>
-                   
-                <tr>
-                    <td><%= ticket.getId()%></td>
-                    <td><%= df.format(ticket.getDate())%></td>
-                    <td><%= ticket.getTitle()%></td>
-                    <td><%= ticket.getStatus()%></td>
-                    <td><%= ticket.getDeveloper()%></td>
-                    <td>
-                        <form action="ViewTicketServlet" method="POST" id="viewTicket">
-                            <input type="hidden" name="id" value=<%=ticket.getId()%>>
-                            <input type="submit" value="View Details" name="viewTickets" id="ViewTicketSubmit">
-                        </form>
-                    </td>
-                    </td> 
-                </tr>
-                <% } %> 
-               
-            </tbody>
-        </table>
         
         <button onclick="showTicketForm()" id="showTicket">Create Ticket</button>
         <script language="javascript">
@@ -112,7 +71,8 @@
             </tbody>
         </table>
         <br/>
-        <button><a href="LogoutServlet">Logout</a></button>
+        
+        <%@ include file="footer.jspf" %>
     </body>
 </html>
 
