@@ -51,10 +51,6 @@ public class DisplayTicketsServlet extends HttpServlet {
             where = " sender_name= '" + username + "' ";
         }
         
-        DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
-        
-        
-        
         if(request.getParameter("sort")!= null){
             sort = request.getParameter("sort");
         }
@@ -71,23 +67,20 @@ public class DisplayTicketsServlet extends HttpServlet {
             where += " AND date BETWEEN " + request.getAttribute("dateMin") + "AND " + request.getAttribute("dateMax");
         }
         
+        DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
+        
         List<TicketBean> tickets = displayTicketsDao.displayTickets(sort, where);
         
         List<String> developers = displayTicketsDao.displayDevelopers();
         
         
+        if(request.getSession().getAttribute("Admin") != null){
+            request.setAttribute("developers", developers);
+        }
         request.setAttribute("ticketList", tickets); 
         
-        if(request.getSession().getAttribute("Developer") != null){
-            request.getRequestDispatcher("/ticketList.jsp").forward(request, response);
-        }
-        else if(request.getSession().getAttribute("Client") != null){
-            request.getRequestDispatcher("/ticketList.jsp").forward(request, response);
-        }
-        else{
-            request.setAttribute("developers", developers);
-            request.getRequestDispatcher("/ticketList.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("/ticketList.jsp").forward(request, response);
+        
 
     }
 

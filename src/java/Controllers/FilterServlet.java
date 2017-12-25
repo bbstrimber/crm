@@ -50,7 +50,7 @@ public class FilterServlet extends HttpServlet {
             request.setAttribute("dateMax", dateMax);
         }
         
-        request.getRequestDispatcher("DisplayTicketsServlet").forward(request, response);
+        request.getRequestDispatcher("DisplayTickets").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -16,11 +16,13 @@
     </head>
     <body>
         <%@ include file="navbar.jspf" %>
-        <table border="1">
+        
+        <h1>Companies:</h1>
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
                 </tr>
             </thead>
             <tbody>

@@ -14,11 +14,26 @@
 <html>
     <head>
         <%@ include file="header.jspf" %> 
-        <title>Admin</title>
+        <title>Home</title>
     </head>
     <body>
         <%@ include file="navbar.jspf" %>
-        <h1>Welcome Admin!</h1>
+        <% String username;
+        if(request.getSession().getAttribute("Developer") != null)
+        {
+            username = (String)request.getSession().getAttribute("Developer");
+        }
+        else if(request.getSession().getAttribute("Client") != null)
+        {
+           username = (String)request.getSession().getAttribute("Client");
+        }
+        else
+        {
+            username = (String)request.getSession().getAttribute("Admin");
+        }
+        %>
+        
+        <h1>Welcome <%= username %>!</h1>
         
         <%
             String newTicket = (String)request.getAttribute("newTicket");

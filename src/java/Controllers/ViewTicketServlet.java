@@ -21,7 +21,7 @@ import utils.TicketBean;
  *
  * @author Code Blue
  */
-@WebServlet(urlPatterns = {"/ViewTicketServlet"})
+@WebServlet(urlPatterns = {"/ViewTicket"})
 public class ViewTicketServlet extends HttpServlet {
 
     /**

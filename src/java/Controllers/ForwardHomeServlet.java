@@ -32,18 +32,8 @@ public class ForwardHomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("Admin") != null)
-        {
-            request.getRequestDispatcher("/admin.jsp").forward(request, response);
-        }
-        else if(request.getSession().getAttribute("Developer") != null)
-        {
-            request.getRequestDispatcher("/developer.jsp").forward(request, response);
-        }
-        else
-        {
-            request.getRequestDispatcher("/client.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("/user.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

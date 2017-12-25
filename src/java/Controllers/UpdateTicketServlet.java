@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Code Blue
  */
-@WebServlet(urlPatterns = {"/UpdateTicketServlet"})
+@WebServlet(urlPatterns = {"/UpdateTicket"})
 public class UpdateTicketServlet extends HttpServlet {
 
     /**
@@ -61,14 +61,14 @@ public class UpdateTicketServlet extends HttpServlet {
 
             request.setAttribute("updateTicket", id);
 
-            request.getRequestDispatcher("ViewTicketServlet").forward(request, response);
+            request.getRequestDispatcher("ViewTicket").forward(request, response);
                   
         }
         
         else
         {
             request.setAttribute("failUpdate", id);
-            request.getRequestDispatcher("ViewTicketServlet").forward(request, response);
+            request.getRequestDispatcher("ViewTicket").forward(request, response);
         }
         
         
