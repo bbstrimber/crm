@@ -17,26 +17,28 @@
     <body>
         <%@ include file="navbar.jspf" %>
         
-        <h1>Companies:</h1>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%
-                   List<CompanyBean> companies = (ArrayList<CompanyBean>) request.getAttribute("companies");
-                   for(CompanyBean company : companies){
-                %>
-                <tr>
-                    <td><%= company.getId()%></td>
-                    <td><%= company.getName()%></td>
-                </tr>
-                <% } %>
-            </tbody>
-        </table>
+        <span class="col-sm-offset-1 col-sm-10">
+            <h2>Companies:</h2>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                       List<CompanyBean> companies = (ArrayList<CompanyBean>) request.getAttribute("companies");
+                       for(CompanyBean company : companies){
+                    %>
+                    <tr>
+                        <td><%= company.getId()%></td>
+                        <td><%= company.getName()%></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </span>
         
         <%@ include file="footer.jspf" %>
     </body>

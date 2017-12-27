@@ -14,31 +14,34 @@
     <body>
         <%@ include file="navbar.jspf" %>
         
-        <h2>New Ticket</h2>
+        
                 
-        <form action="AddTicket" method="POST" enctype="multipart/form-data" class="form-horizontal" id="newTicketForm">
-            <div class="form-group">
-                <label for="title" class="control-label col-sm-2">Title: </label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="title" required/>
+        <form action="AddTicket" method="POST" enctype="multipart/form-data" class="form-horizontal col-sm-8 col-sm-offset-2" id="newTicketForm">
+            <h2>New Ticket</h2>
+            <fieldset class="well">
+                <div class="form-group">
+                    <label for="title" class="control-label col-sm-2">Title: </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="title" required/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="content" class="control-label col-sm-2">Content: </label>
-                <div class="col-sm-8">
-                    <textarea id="content" class="form-control" rows="3" required></textarea>
+                <div class="form-group">
+                    <label for="content" class="control-label col-sm-2">Content: </label>
+                    <div class="col-sm-8">
+                        <textarea id="content" class="form-control" rows="5" required></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-8">
-                    <input type="file" id="attachment" class="form-control-file" </td>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <input type="file" id="attachment" class="form-control-file" </td>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group"> 
-                <div class="col-sm-offset-2 col-sm-8">
-                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                <div class="form-group"> 
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
                 </div>
-            </div>
+            </fieldset>
         </form>
         
         <%@ include file="footer.jspf" %> 

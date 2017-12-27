@@ -18,64 +18,73 @@
     </head>
     <body>
         <%@ include file="navbar.jspf" %>
-        <h1>Users:</h1>
         
-        <table class="table table-bordered table-striped">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Password</th>
-                    <th scope="col">User Type</th>
-                    <th scope="col">Company Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%
-                   List<UserBean> users = (ArrayList<UserBean>) request.getAttribute("users");
-                   for(UserBean user : users){
-                %>
-                   
-                <tr>
-                    <td><%= user.getId()%></td>
-                    <td><%= user.getUsername()%></td>
-                    <td><%= user.getPassword()%></td>
-                    <td><%= user.getUserType()%></td>
-                    <td><%= user.getCompany()%></td>
-                </tr>
-                <% } %>
-            </tbody>
-        </table>
-            
-        <br/>
-         
-        <button type="button" class="btn btn-default" onclick="showForm()" id="showForm">Add User</button>
-        <script language="javascript">
-            function showForm() {
-                document.getElementById("addUserForm").style.display="block";
-                document.getElementById("showForm").style.display="none";
-            }
-        </script>
         
-        <form action="AddUser" method="POST" class="form-inline" id="addUserForm" style="display:none">
+        <span class="col-sm-offset-1 col-sm-10">
+            <h2>Users:</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">User Type</th>
+                        <th scope="col">Company Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                       List<UserBean> users = (ArrayList<UserBean>) request.getAttribute("users");
+                       for(UserBean user : users){
+                    %>
+
+                    <tr>
+                        <td><%= user.getId()%></td>
+                        <td><%= user.getUsername()%></td>
+                        <td><%= user.getPassword()%></td>
+                        <td><%= user.getUserType()%></td>
+                        <td><%= user.getCompany()%></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+
+            <br/>
+
+            <button type="button" class="btn btn-primary" onclick="showForm()" id="showForm"><i class="fas fa-user-plus"></i>&nbsp;Add User</button>
+            <script language="javascript">
+                function showForm() {
+                    document.getElementById("addUserForm").style.display="block";
+                    document.getElementById("showForm").style.display="none";
+                }
+            </script>
+        </span>
+        
+        <form action="AddUser" method="POST" class="col-sm-offset-2 col-sm-8" id="addUserForm" style="display:none">
             <h4>Add User: </h4>
-            <div class="form-group ">
-                <label for="username">Username: </label>
-                <input type="text" class="form-control" id="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password: </label>
-                <input type="password" class="form-control" id="password" required>
-            </div>
-            <div class="form-group">
-                <label for="userType">User Type: </label>
-                <select class="form-control" id="userType" required>
-                    <option disabled selected>Select User Type</option>
-                    <option>developer</option>
-                    <option>client</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Add User</button>
+            <fieldset class="well ">
+                <div class="form-row">
+                    <div class="form-group col-sm-5">
+                        <label for="username">Username: </label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="password">Password: </label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="userType">User Type: </label>
+                        <select class="form-control" id="userType" required>
+                            <option disabled selected>Select User Type</option>
+                            <option>developer</option>
+                            <option>client</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center"> 
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </div>
+            </fieldset>
         </form>
         
         <%@ include file="footer.jspf" %>    

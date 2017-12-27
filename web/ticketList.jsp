@@ -18,43 +18,53 @@
         <%@ include file="navbar.jspf" %>
         <% java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); %>
         
-        <h2>Tickets</h2>
-        <table id="ticketList" class="table table-bordered table-hover">
-            <thead class="thead-light">
+        
+        <span class="col-sm-offset-1 col-sm-10">
+            <h2>Tickets</h2>
+            <table id="ticketList" class="table table-bordered table-hover table-responsive ">
+                <thead class="thead-light">
+
+                    <tr>
+                        <th scope="col"><a href="Tickets?sort=id">Id</a></th>
+                        <th scope="col"><a href="Tickets?sort=date">Date</a></th>
+                        <th scope="col"><a href="Tickets?sort=title">Title</a></th>
+                        <th scope="col"><a href="Tickets?sort=status">Status</a></th>
+                        <th scope="col"><a href="Tickets?sort=developer">Developer</a></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  
+                       List<TicketBean> tickets = (ArrayList<TicketBean>) request.getAttribute("ticketList");
+                       for(TicketBean ticket : tickets){
+                    %>
+
+                    <tr>
+                        <td><%= ticket.getId()%></td>
+                        <td><%= df.format(ticket.getDate())%></td>
+                        <td><%= ticket.getTitle()%></td>
+                        <td><%= ticket.getStatus()%></td>
+                        <td><%= ticket.getDeveloper()%></td>
+                        <td class="text-center">
+                            <form action="ViewTicket" method="POST" id="viewTicket">
+                                <input type="hidden" name="id" value=<%=ticket.getId()%>>
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-th-list pull-left"></span>
+                                    &nbsp;View Details
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>            
+                </tbody>
+            </table>     
+            <a href="NewTicket" type="button" class="btn btn-default" id="newTicket">
+                <i class="fas fa-list-alt"></i>
+                &nbsp;New Ticket
+            </a>
+        </span>
                 
-                <tr>
-                    <th scope="col"><a href="Tickets?sort=id">Id</a></th>
-                    <th scope="col"><a href="Tickets?sort=date">Date</a></th>
-                    <th scope="col"><a href="Tickets?sort=title">Title</a></th>
-                    <th scope="col"><a href="Tickets?sort=status">Status</a></th>
-                    <th scope="col"><a href="Tickets?sort=developer">Developer</a></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <%  
-                   List<TicketBean> tickets = (ArrayList<TicketBean>) request.getAttribute("ticketList");
-                   for(TicketBean ticket : tickets){
-                %>
-                   
-                <tr>
-                    <td><%= ticket.getId()%></td>
-                    <td><%= df.format(ticket.getDate())%></td>
-                    <td><%= ticket.getTitle()%></td>
-                    <td><%= ticket.getStatus()%></td>
-                    <td><%= ticket.getDeveloper()%></td>
-                    <td>
-                        <form action="ViewTicket" method="POST" id="viewTicket">
-                            <input type="hidden" name="id" value=<%=ticket.getId()%>>
-                            <input type="submit" value="View Details" name="viewTickets" id="ViewTicketSubmit">
-                        </form>
-                    </td>
-                </tr>
-                <% } %>            
-            </tbody>
-        </table> 
-        <br/> 
-        <a href="NewTicket" type="button" class="btn btn-default" id="newTicket">New Ticket</a>       
+               
         <br/>
         
     <body>
