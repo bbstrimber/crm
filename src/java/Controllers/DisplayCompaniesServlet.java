@@ -19,7 +19,7 @@ import utils.CompanyBean;
  *
  * @author Blumie
  */
-@WebServlet(urlPatterns = {"/DisplayCompanies"})
+@WebServlet(urlPatterns = {"/Companies"})
 public class DisplayCompaniesServlet extends HttpServlet {
 
     /**

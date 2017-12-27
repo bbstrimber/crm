@@ -19,15 +19,15 @@
         <% java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); %>
         
         <h2>Tickets</h2>
-        <table id="ticketList" class="table table-responsive table-hover">
+        <table id="ticketList" class="table table-bordered table-hover">
             <thead class="thead-light">
                 
                 <tr>
-                    <th scope="col"><a href="DisplayTickets?sort=id">Id</a></th>
-                    <th scope="col"><a href="DisplayTickets?sort=date">Date</a></th>
-                    <th scope="col"><a href="DisplayTickets?sort=title">Title</a></th>
-                    <th scope="col"><a href="DisplayTickets?sort=status">Status</a></th>
-                    <th scope="col"><a href="DisplayTickets?sort=developer">Developer</a></th>
+                    <th scope="col"><a href="Tickets?sort=id">Id</a></th>
+                    <th scope="col"><a href="Tickets?sort=date">Date</a></th>
+                    <th scope="col"><a href="Tickets?sort=title">Title</a></th>
+                    <th scope="col"><a href="Tickets?sort=status">Status</a></th>
+                    <th scope="col"><a href="Tickets?sort=developer">Developer</a></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -44,7 +44,7 @@
                     <td><%= ticket.getStatus()%></td>
                     <td><%= ticket.getDeveloper()%></td>
                     <td>
-                        <form action="ViewTicketServlet" method="POST" id="viewTicket">
+                        <form action="ViewTicket" method="POST" id="viewTicket">
                             <input type="hidden" name="id" value=<%=ticket.getId()%>>
                             <input type="submit" value="View Details" name="viewTickets" id="ViewTicketSubmit">
                         </form>
@@ -53,42 +53,9 @@
                 <% } %>            
             </tbody>
         </table> 
+        <br/> 
+        <a href="NewTicket" type="button" class="btn btn-default" id="newTicket">New Ticket</a>       
+        <br/>
         
-        <button onclick="showTicketForm()" id="showTicket">Create Ticket</button>
-        <script language="javascript">
-            function showTicketForm() {
-                document.getElementById("newTicketForm").style.display="block";
-                document.getElementById("showTicketForm").style.display="none";
-            }
-        </script>        
-                
-        <table border="0" id="newTicketForm" style="display: none" >
-            <thead>
-                <tr>
-                    <th colspan="2">Create Ticket</th>
-                </tr>
-            </thead>
-            <tbody>
-                <form action="AddTicket" method="POST" enctype="multipart/form-data">
-                    <tr>
-                        <td> Title:</td>
-                        <td><input type="text" name="title" required/> </td>
-                    </tr>
-                    <tr>
-                        <td> Content: </td>
-                        <td> <textarea name="content" rows="4" cols="20" required></textarea> </td>
-                    </tr>
-                    <tr>
-                        <td> <input type="file" name="attachment" </td>
-                    </tr>
-                    <tr>
-                        <td><button class="btn btn-primary" type="submit"  name="submit">Submit</button></td>
-                    </tr>
-                </form>
-            </tbody>
-        </table>
-        <br/>    
-            
     <body>
-        
 </html>

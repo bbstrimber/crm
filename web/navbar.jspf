@@ -14,11 +14,11 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                   <li class="active"><a href="Home">Home</a></li>
-                  <li><a href="DisplayTickets">Tickets</a></li>
+                  <li><a href="Tickets">Tickets</a></li>
                   <li><a href="NewTicket">New Ticket</a></li>
                   <%if(request.getSession().getAttribute("Admin") != null) { %>
-                  <li><a href="DisplayUsers">Users</a></li> 
-                  <li><a href="DisplayCompanies">Companies</a></li>
+                  <li><a href="Users">Users</a></li> 
+                  <li><a href="Companies">Companies</a></li>
                   <% } %>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

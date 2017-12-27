@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Code Blue
  */
-@WebServlet(urlPatterns = {"/LoginServlet"})
+@WebServlet(urlPatterns = {"/Login"})
 public class LoginServlet extends HttpServlet {
 
     /**
@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
                     System.out.println("Admin's Home");
                     HttpSession session = request.getSession();
                     session.setAttribute("Admin", username);
-                    request.setAttribute("userName", username);
+                    session.setAttribute("userName", username);
                     request.getRequestDispatcher("/user.jsp").forward(request, response);
                     break;
                 }
@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
                     System.out.println("Developer's Home");
                     HttpSession session = request.getSession();
                     session.setAttribute("Developer", username);
-                    request.setAttribute("userName", username);
+                    session.setAttribute("userName", username);
                     request.getRequestDispatcher("/user.jsp").forward(request, response);
                     break;
                 }
@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
                     System.out.println("Client's Home");
                     HttpSession session = request.getSession();
                     session.setAttribute("Client", username);
-                    request.setAttribute("userName", username);
+                    session.setAttribute("userName", username);
                     request.getRequestDispatcher("/user.jsp").forward(request, response);
                     break;
                 }

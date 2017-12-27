@@ -18,22 +18,9 @@
     </head>
     <body>
         <%@ include file="navbar.jspf" %>
-        <% String username;
-        if(request.getSession().getAttribute("Developer") != null)
-        {
-            username = (String)request.getSession().getAttribute("Developer");
-        }
-        else if(request.getSession().getAttribute("Client") != null)
-        {
-           username = (String)request.getSession().getAttribute("Client");
-        }
-        else
-        {
-            username = (String)request.getSession().getAttribute("Admin");
-        }
-        %>
+        <% String user = (String)request.getSession().getAttribute("userName");%>
         
-        <h1>Welcome <%= username %>!</h1>
+        <h1>Welcome <%= user %>!</h1>
         
         <%
             String newTicket = (String)request.getAttribute("newTicket");

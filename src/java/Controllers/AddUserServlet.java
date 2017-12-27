@@ -56,7 +56,7 @@ public class AddUserServlet extends HttpServlet {
             {
                 request.setAttribute("fail", username);
             }
-            request.getRequestDispatcher("DisplayUsers").forward(request, response);
+            request.getRequestDispatcher("Users").forward(request, response);
             
         }
     

@@ -47,7 +47,9 @@
             </tbody>
         </table>
             
-        <button onclick="showForm()" id="showForm">Add User</button>
+        <br/>
+         
+        <button type="button" class="btn btn-default" onclick="showForm()" id="showForm">Add User</button>
         <script language="javascript">
             function showForm() {
                 document.getElementById("addUserForm").style.display="block";
@@ -55,19 +57,27 @@
             }
         </script>
         
-        <form action="AddUser" method="POST" id="addUserForm" style="display: none">
-             Username: <input type="text" name="username" required/> <br/>
-             Password: <input type="text" name="password" required/> <br/>
-             User Type 
-            <select name="userType" required>
-                <option disabled selected>Select User Type</option>
-                <option>developer</option>
-                <option>client</option>
-            </select>
-             <br/>
-             <input type="submit" value="Add User" name="submit" />
+        <form action="AddUser" method="POST" class="form-inline" id="addUserForm" style="display:none">
+            <h4>Add User: </h4>
+            <div class="form-group ">
+                <label for="username">Username: </label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password: </label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="form-group">
+                <label for="userType">User Type: </label>
+                <select class="form-control" id="userType" required>
+                    <option disabled selected>Select User Type</option>
+                    <option>developer</option>
+                    <option>client</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add User</button>
         </form>
-            
+        
         <%@ include file="footer.jspf" %>    
     </body>
 </html>

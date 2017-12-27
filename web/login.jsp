@@ -21,7 +21,7 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     
-                    <form action="LoginServlet" method="post" class="form-horizontal">
+                    <form action="Login" method="post" class="form-horizontal">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             <input type="text" class="form-control" name="username" id="username" placeholder="Username"/>

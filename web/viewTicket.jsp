@@ -14,12 +14,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <%@ include file="header.jspf" %>
         <title>View Ticket</title>
     </head>
     <body>
-        
+        <%@ include file="navbar.jspf" %>
         <script language="javascript">
             
             function showHideSelect()
@@ -183,6 +182,5 @@
         </table>
         </br>
         
-        <button><a href="DisplayTicketsServlet">Home</a></button>                       
-    </body>
+        <%@ include file="footer.jspf" %>  
 </html>
