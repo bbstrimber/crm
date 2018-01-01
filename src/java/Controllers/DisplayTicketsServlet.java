@@ -38,6 +38,7 @@ public class DisplayTicketsServlet extends HttpServlet {
         String sort = "id";
         String where = "1=1";
         String username;
+        String limitPerPage = " LIMIT ";
         
         if(request.getSession().getAttribute("Developer") != null){
             sort = " FIELD(status, 'Assigned') DESC,  id ";
@@ -66,10 +67,21 @@ public class DisplayTicketsServlet extends HttpServlet {
             
             where += " AND date BETWEEN " + request.getAttribute("dateMin") + "AND " + request.getAttribute("dateMax");
         }
+        if(request.getSession().getAttribute("perPage") != null){
+             int perPage = (int) request.getSession().getAttribute("perPage");
+             int pageNumber = (int) request.getSession().getAttribute("pageNumber");
+             limitPerPage += (perPage * pageNumber) + ", " + perPage;
+        }
+        else
+        {
+             limitPerPage += "10";
+             request.getSession().setAttribute("perPage", 10);
+             request.getSession().setAttribute("pageNumber", 0);
+        }
         
         DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
         
-        List<TicketBean> tickets = displayTicketsDao.displayTickets(sort, where);
+        List<TicketBean> tickets = displayTicketsDao.displayTickets(sort, where, limitPerPage);
         
         List<String> developers = displayTicketsDao.displayDevelopers();
         

@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class DisplayTicketsDao {
     
-    public List<TicketBean> displayTickets(String sort, String where) {
+    public List<TicketBean> displayTickets(String sort, String where, String limitPerPage) {
         
         List<TicketBean> tickets = new ArrayList<TicketBean>();
         
@@ -34,7 +34,7 @@ public class DisplayTicketsDao {
         {
             con = DBConnection.createConnection();
             
-            String sql = "SELECT id, date, title, status, developer FROM tickets WHERE " + where + " ORDER BY " + sort;
+            String sql = "SELECT id, date, title, status, developer FROM tickets WHERE " + where + " ORDER BY " + sort + limitPerPage;
             //String sql = "SELECT * FROM tickets ORDER BY FIELD(status, 'new') DESC,  " + sort;
             
             statement = con.prepareStatement(sql);
@@ -90,4 +90,30 @@ public class DisplayTicketsDao {
         return developers;
     }
     
+    public int numOfTickets(){
+        
+        int numOfTickets = 0;
+        Connection con = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        
+        try
+        {
+            con = DBConnection.createConnection();
+            statement = con.prepareStatement("SELECT COUNT(*) from tickets");
+            rs = statement.executeQuery(); 
+            
+            while(rs.next()){
+                numOfTickets = rs.getInt(1);
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return numOfTickets;
+    
+    }
 }

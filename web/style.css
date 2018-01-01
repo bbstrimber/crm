@@ -8,6 +8,10 @@ and open the template in the editor.
     Author     : Code Blue
 */
 
+#assignLabel {
+    font-weight: normal !important;
+}
+
 .jumbotron {
     display:flex;
     justify-content:center;

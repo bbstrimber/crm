@@ -58,7 +58,7 @@ public class AddCommentServlet extends HttpServlet {
 
             request.setAttribute("addComment", id);
 
-            request.getRequestDispatcher("ViewTicketServlet").forward(request, response);
+            request.getRequestDispatcher("ViewTicket").forward(request, response);
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Models.DisplayTicketsDao;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Blumie
  */
-@WebServlet(name = "FilterServlet", urlPatterns = {"/FilterServlet"})
+@WebServlet(urlPatterns = {"/Filter"})
 public class FilterServlet extends HttpServlet {
 
     /**
@@ -31,26 +32,40 @@ public class FilterServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        if(request.getParameterMap().containsKey("status")) {
+            if(!request.getParameter("status").equals("By Status")){
+                String status = request.getParameter("status");
+                request.setAttribute("status", status);
+            }
+        }
+        if (request.getParameterMap().containsKey("developer")) {
+            if(!request.getParameter("developer").equals("By Developer")){
+                String developer = request.getParameter("developer");
+                request.setAttribute("developer", developer);
+            }
+        }
+        if(request.getParameterMap().containsKey("dateMin") && request.getParameterMap().containsKey("dateMax")) {
+            if(request.getParameter("dateMin")!= null && request.getParameter("dateMax")!= null){
+                String dateMin = request.getParameter("dateMin");
+                String dateMax = request.getParameter("dateMax");
+                request.setAttribute("dateMin", dateMin);
+                request.setAttribute("dateMax", dateMax);
+            }
+        }
+        if (request.getParameterMap().containsKey("perPage")) {
+                
+            DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
+            int perPage = displayTicketsDao.numOfTickets();
+                
+            if(!request.getParameter("perPage").equals("View All") && !request.getParameter("perPage").equals("View Per Page")){
+                    
+                perPage = Integer.parseInt(request.getParameter("perPage"));
+            }
+            request.getSession().setAttribute("perPage", perPage);
+            request.getSession().setAttribute("pageNumber", 0);
+        }
         
-        
-        if(request.getParameter("status")!= "Status"){
-            String status = request.getParameter("status");
-            request.setAttribute("status", status);
-        }
-        if(request.getParameter("developer")!= "Developer"){
-            String developer = request.getParameter("developer");
-            request.setAttribute("developer", developer);
-        }
-        if(request.getParameter("dateMin")!= null){
-            String dateMin = request.getParameter("dateMin");
-            request.setAttribute("dateMin", dateMin);
-        }
-        if(request.getParameter("dateMax")!= null){
-            String dateMax = request.getParameter("dateMax");
-            request.setAttribute("dateMax", dateMax);
-        }
-        
-        request.getRequestDispatcher("DisplayTickets").forward(request, response);
+        request.getRequestDispatcher("Tickets").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

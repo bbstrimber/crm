@@ -50,31 +50,6 @@
         <% }
            java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); %>
         
-        <!--Filter:
-        </br>   
-        <form action="FilterServlet" method="POST" id="filter">
-            <select name="status">
-                <option disabled selected>Status</option>
-                <option>new</option>
-                <option>Assigned</option>
-                <option>Resolved</option>
-            </select>
-            <div border ="1"> Date:  
-                From<input type="date" name="dateMin">
-                To<input type="date" name="dateMax">
-            </div>
-            <select name="developer">
-                <option disabled selected>Developer</option>
-                <%--<%
-                    List<String> developers = (ArrayList<String>)request.getAttribute("developers");
-                    for(String developer : developers) {
-                %>--%>
-                <option><%--<%=developer %>--%></option>
-                <%--<%}%>--%>
-            </select>
-            <input type="submit" value="Filter" name="submit">
-        </form> 
-         -->
         <br/>
         <%@ include file="footer.jspf" %>  
     </body>

@@ -38,7 +38,29 @@
                     <% } %>
                 </tbody>
             </table>
+        <button type="button" class="btn btn-primary" onclick="showForm()" id="showForm"><i class="fas fa-users"></i>+&nbsp;Add Company</button>
+            <script language="javascript">
+                function showForm() {
+                    document.getElementById("addCompanyForm").style.display="block";
+                    document.getElementById("showForm").style.display="none";
+                }
+            </script>
         </span>
+        
+        <form action="AddUser" method="POST" class="col-sm-offset-2 col-sm-8" id="addCompanyForm" style="display:none">
+            <h4>Add Company: </h4>
+            <fieldset class="well ">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Company Name: </label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                </div>
+                <div class="text-center"> 
+                    <button type="submit" class="btn btn-primary">Add Company</button>
+                </div>
+            </fieldset>
+        </form>
         
         <%@ include file="footer.jspf" %>
     </body>

@@ -1,25 +1,27 @@
-package Controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controllers;
 
-import Models.UpdateTicketDao;
+import Models.AddCompanyDao;
+import Models.AddUserDao;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.CompanyBean;
+import utils.UserBean;
 
 /**
  *
- * @author Code Blue
+ * @author Blumie
  */
-@WebServlet(urlPatterns = {"/UpdateTicket"})
-public class UpdateTicketServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/AddCompany"})
+public class AddCompanyServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,45 +35,24 @@ public class UpdateTicketServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-        int id = Integer.parseInt(request.getParameter("id"));
-        String status = request.getParameter("status");
-        String developerName = null;
-        
-        if(request.getParameter("developer") != null){
-            developerName = request.getParameter("developer");
-        }
-        
-        
-        if(!"Update Status".equals(status)){
-            
-            UpdateTicketDao updateTicketDao = new UpdateTicketDao();
-            
-            updateTicketDao.updateStatus(id, status);
+        String name = request.getParameter("name");
 
-            request.setAttribute("updateTicket", id);
+        CompanyBean addCompanyBean = new CompanyBean();
+        addCompanyBean.setName(name);
 
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
-                  
-        }
-        if(!"Assign to Developer".equals(developerName) && developerName != null)
+        AddCompanyDao addCompanyDao = new AddCompanyDao();
+
+        String addUser = addCompanyDao.addCompany(addCompanyBean);
+
+        if(addUser.equals("SUCCESS"))
         {
-            UpdateTicketDao updateTicketDao = new UpdateTicketDao();
-            updateTicketDao.updateDeveloper(id, developerName);
-
-            request.setAttribute("updateTicket", id);
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
-                  
+            request.setAttribute("newCompany", name); 
         }
-        
         else
         {
-            request.setAttribute("failUpdate", id);
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
+            request.setAttribute("fail", name);
         }
-        
-        
-        
+        request.getRequestDispatcher("Users").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

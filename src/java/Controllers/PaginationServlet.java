@@ -1,13 +1,13 @@
-package Controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controllers;
 
-import Models.UpdateTicketDao;
+import Models.DisplayTicketsDao;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Code Blue
+ * @author Blumie
  */
-@WebServlet(urlPatterns = {"/UpdateTicket"})
-public class UpdateTicketServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/Pagination"})
+public class PaginationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,44 +33,27 @@ public class UpdateTicketServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        int pageNumber = (int) request.getSession().getAttribute("pageNumber");
         
-        int id = Integer.parseInt(request.getParameter("id"));
-        String status = request.getParameter("status");
-        String developerName = null;
-        
-        if(request.getParameter("developer") != null){
-            developerName = request.getParameter("developer");
-        }
-        
-        
-        if(!"Update Status".equals(status)){
-            
-            UpdateTicketDao updateTicketDao = new UpdateTicketDao();
-            
-            updateTicketDao.updateStatus(id, status);
-
-            request.setAttribute("updateTicket", id);
-
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
-                  
-        }
-        if(!"Assign to Developer".equals(developerName) && developerName != null)
+        if(request.getParameter("page").equals("-1"))
         {
-            UpdateTicketDao updateTicketDao = new UpdateTicketDao();
-            updateTicketDao.updateDeveloper(id, developerName);
-
-            request.setAttribute("updateTicket", id);
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
-                  
+            if(pageNumber != 0){
+                pageNumber = pageNumber - 1;
+            }
         }
-        
         else
         {
-            request.setAttribute("failUpdate", id);
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
+            DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
+            int numOfTickets = displayTicketsDao.numOfTickets();
+            int perPage = (int) request.getSession().getAttribute("perPage");
+            if(pageNumber < ((numOfTickets / perPage) -1))
+            {
+                pageNumber = pageNumber + 1;
+            }
         }
         
-        
+        request.getSession().setAttribute("pageNumber", pageNumber);
+        request.getRequestDispatcher("Tickets").forward(request, response);
         
     }
 
