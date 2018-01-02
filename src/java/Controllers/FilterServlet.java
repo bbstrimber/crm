@@ -54,15 +54,17 @@ public class FilterServlet extends HttpServlet {
         }
         if (request.getParameterMap().containsKey("perPage")) {
                 
-            DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
-            int perPage = displayTicketsDao.numOfTickets();
-                
+            int perPage = 10;
             if(!request.getParameter("perPage").equals("View All") && !request.getParameter("perPage").equals("View Per Page")){
                     
                 perPage = Integer.parseInt(request.getParameter("perPage"));
             }
-            request.getSession().setAttribute("perPage", perPage);
-            request.getSession().setAttribute("pageNumber", 0);
+            else if(request.getParameter("perPage").equals("View All")){
+                DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
+                perPage = displayTicketsDao.numOfTickets();
+            }
+            request.setAttribute("perPage", perPage);
+            request.setAttribute("pageNumber", 0);
         }
         
         request.getRequestDispatcher("Tickets").forward(request, response);

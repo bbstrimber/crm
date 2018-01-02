@@ -39,6 +39,8 @@ public class DisplayTicketsServlet extends HttpServlet {
         String where = "1=1";
         String username;
         String limitPerPage = " LIMIT ";
+        int perPage = 10;
+        int pageNumber = 0;
         
         if(request.getSession().getAttribute("Developer") != null){
             sort = " FIELD(status, 'Assigned') DESC,  id ";
@@ -67,29 +69,34 @@ public class DisplayTicketsServlet extends HttpServlet {
             
             where += " AND date BETWEEN " + request.getAttribute("dateMin") + "AND " + request.getAttribute("dateMax");
         }
-        if(request.getSession().getAttribute("perPage") != null){
-             int perPage = (int) request.getSession().getAttribute("perPage");
-             int pageNumber = (int) request.getSession().getAttribute("pageNumber");
+        if(request.getAttribute("perPage") != null){
+             perPage = (int) request.getAttribute("perPage");
+             pageNumber = (int) request.getAttribute("pageNumber");
              limitPerPage += (perPage * pageNumber) + ", " + perPage;
         }
         else
         {
-             limitPerPage += "10";
-             request.getSession().setAttribute("perPage", 10);
-             request.getSession().setAttribute("pageNumber", 0);
+            limitPerPage += perPage;
         }
         
         DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
         
         List<TicketBean> tickets = displayTicketsDao.displayTickets(sort, where, limitPerPage);
-        
         List<String> developers = displayTicketsDao.displayDevelopers();
         
+        int numOfTickets = displayTicketsDao.numOfTickets();
+        int numOfPages = numOfTickets / perPage;
+        if (numOfPages % perPage > 0) {
+            numOfPages++;
+        }
         
-        if(request.getSession().getAttribute("Admin") != null){
+        if(request.getSession().getAttribute("Developer") == null){
             request.setAttribute("developers", developers);
         }
-        request.setAttribute("ticketList", tickets); 
+        request.setAttribute("ticketList", tickets);
+        request.setAttribute("perPage", perPage);
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("numOfPages", numOfPages);
         
         request.getRequestDispatcher("/ticketList.jsp").forward(request, response);
         

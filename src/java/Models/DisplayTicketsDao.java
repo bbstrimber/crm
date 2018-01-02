@@ -100,7 +100,7 @@ public class DisplayTicketsDao {
         try
         {
             con = DBConnection.createConnection();
-            statement = con.prepareStatement("SELECT COUNT(*) from tickets");
+            statement = con.prepareStatement("SELECT COUNT(id) from tickets");
             rs = statement.executeQuery(); 
             
             while(rs.next()){

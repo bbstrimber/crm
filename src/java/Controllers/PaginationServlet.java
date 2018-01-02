@@ -33,26 +33,12 @@ public class PaginationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int pageNumber = (int) request.getSession().getAttribute("pageNumber");
+        int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        int perPage = Integer.parseInt(request.getParameter("perPage"));
         
-        if(request.getParameter("page").equals("-1"))
-        {
-            if(pageNumber != 0){
-                pageNumber = pageNumber - 1;
-            }
-        }
-        else
-        {
-            DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
-            int numOfTickets = displayTicketsDao.numOfTickets();
-            int perPage = (int) request.getSession().getAttribute("perPage");
-            if(pageNumber < ((numOfTickets / perPage) -1))
-            {
-                pageNumber = pageNumber + 1;
-            }
-        }
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("perPage", perPage);
         
-        request.getSession().setAttribute("pageNumber", pageNumber);
         request.getRequestDispatcher("Tickets").forward(request, response);
         
     }

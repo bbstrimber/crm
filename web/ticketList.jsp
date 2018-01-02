@@ -16,7 +16,6 @@
     </head>
     <body>
         <%@ include file="navbar.jspf" %>
-        <% java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); %>
     
         <span class="col-sm-offset-1 col-sm-10">
             <h2>Tickets</h2>
@@ -33,26 +32,26 @@
                             <option>Working On</option>
                         </select>
                     </div>
+                    <c:if test="${Developer == null}">
                     <div class="form-group">
                         <select class="form-control" id="developer" name="developer" onchange="javascript:document.filter.submit();">
                             <option selected>By Developer</option>
-                            <%
-                                List<String> developers = (ArrayList<String>)request.getAttribute("developers");
-                                for(String developer : developers) {
-                            %>
-                            <option><%=developer %></option>
-                            <%}%>
+                            
+                            <c:forEach items="${developers}" var="developer">
+                            <option>${developer}</option>
+                            </c:forEach>
                         </select>
                     </div>
-                        <div class="form-group">
-                            <select class="form-control" id="perPage" name="perPage" onchange="javascript:document.filter.submit();">
-                                <option selected>View Per Page</option>
-                                <option>View All</option>
-                                <option>6</option>
-                                <option>8</option>
-                                <option>10</option>
-                            </select>
-                        </div>
+                    </c:if>
+                    <div class="form-group">
+                        <select class="form-control" id="perPage" name="perPage" onchange="javascript:document.filter.submit();">
+                            <option selected>View Per Page</option>
+                            <option>View All</option>
+                            <option>6</option>
+                            <option>8</option>
+                            <option>10</option>
+                        </select>
+                    </div>
                     <!--<div class="input-group input-daterange">
                         <input type="date" name="dateMin" class="form-control">
                         <div class="input-group-addon">to</div>
@@ -62,24 +61,34 @@
                 </form>
                         
             </fieldset>
-            <nav aria-label="Page navigation example">
-                <ul class="pager">
-                    <% 
-                        int pageNumber = 0;
-                        if(request.getSession().getAttribute("pageNumber") != null){
-                            pageNumber = (Integer) request.getSession().getAttribute("pageNumber");
-                        } 
-                    %>
-                    <script language="javascript">
-                        var pageNumber = <%=pageNumber %>;
-                        if(pageNumber < 1){
-                            document.getElementById("previous").disabled=true;
-                        }
+            <nav aria-label="pagination for tickets">
+                <ul class="pagination">
+                    <c:if test="${pageNumber != 0}">
+                        <li class="page-item"><a class="page-link" 
+                            href="Pagination?perPage=${perPage}&pageNumber=${pageNumber-1}">Previous</a>
+                        </li>
+                    </c:if>
 
-                    </script>
-                    
-                    <li class="previous" id="previous"><a href="Pagination?page=-1"> < Previous </a></li>
-                    <li class="next" id="next"><a href="Pagination?page=+1">Next ></a></li>
+                    <c:forEach begin="1" end="${numOfPages}" var="i">
+                        <c:choose>
+                            <c:when test="${pageNumber+1 eq i}">
+                                <li class="page-item active"><a class="page-link">
+                                        ${i} <span class="sr-only">(current)</span></a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item"><a class="page-link" 
+                                    href="Pagination?perPage=${perPage}&pageNumber=${i}">${i}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+
+                    <c:if test="${pageNumber lt numOfPages-1}">
+                        <li class="page-item"><a class="page-link" 
+                            href="Pagination?perPage=${perPage}&pageNumber=${pageNumber+1}">Next ></a>
+                        </li>
+                    </c:if>              
                 </ul>
             </nav>
             <table id="ticketList" class="table table-hover table-responsive ">
@@ -95,20 +104,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%  
-                       List<TicketBean> tickets = (ArrayList<TicketBean>) request.getAttribute("ticketList");
-                       for(TicketBean ticket : tickets){
-                    %>
-
+                    
+                    <c:forEach items="${ticketList}" var="ticket">
                     <tr>
-                        <td><%= ticket.getId()%></td>
-                        <td><%= df.format(ticket.getDate())%></td>
-                        <td><%= ticket.getTitle()%></td>
-                        <td><%= ticket.getStatus()%></td>
-                        <td><%= ticket.getDeveloper()%></td>
+                        <td>${ticket.getId()}</td>
+                        <td><fmt:formatDate value="${ticket.getDate()}" pattern="MM/dd/yyyy"/></td>
+                        <td>${ticket.getTitle()}</td>
+                        <td>${ticket.getStatus()}</td>
+                        <td>${ticket.getDeveloper()}</td>
                         <td class="text-center">
                             <form action="ViewTicket" method="POST" id="viewTicket">
-                                <input type="hidden" name="id" value=<%=ticket.getId()%>>
+                                <input type="hidden" name="id" value=${ticket.getId()}>
                                 <button type="submit" class="btn btn-default">
                                     <span class="glyphicon glyphicon-th-list pull-left"></span>
                                     &nbsp;View Details
@@ -116,7 +122,7 @@
                             </form>
                         </td>
                     </tr>
-                    <% } %>            
+                    </c:forEach>            
                 </tbody>
             </table>     
             <a href="NewTicket" type="button" class="btn btn-default" id="newTicket">
