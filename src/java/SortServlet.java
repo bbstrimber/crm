@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -16,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Blumie
  */
-@WebServlet(urlPatterns = {"/Pagination"})
-public class PaginationServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/Sort"})
+public class SortServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,22 +30,14 @@ public class PaginationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-        int perPage = Integer.parseInt(request.getParameter("perPage"));
+       
         String sort = request.getParameter("sort");
+        int perPage = Integer.parseInt(request.getParameter("perPage"));
+        int pageNumber = 1;
         
-        if (request.getParameterMap().containsKey("status")) {
-            String status = request.getParameter("status");
-            request.setAttribute("status", status);
-        }
-        else if (request.getParameterMap().containsKey("developer")) {
-            String developer = request.getParameter("developer");
-            request.setAttribute("developer", developer);
-        }
-        
-        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("sort", sort);
         request.setAttribute("perPage", perPage);
-        request.setAttribute("sort", sort);        
+        request.setAttribute("pageNumber", pageNumber);
         
         request.getRequestDispatcher("Tickets").forward(request, response);
         

@@ -54,4 +54,29 @@ public class DisplayUsersDao {
         
         return users;
     }
+    public List<String> displayCompanyNames() {
+        
+        List<String> companyNames = new ArrayList<String>();
+        
+        Connection con = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        
+        try
+        {
+            con = DBConnection.createConnection();
+            statement = con.prepareStatement("SELECT name FROM companies");
+            
+            rs = statement.executeQuery(); 
+            while(rs.next()){
+                companyNames.add(rs.getString("name"));
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return companyNames;
+    }
 }

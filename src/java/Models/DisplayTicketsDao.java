@@ -90,7 +90,7 @@ public class DisplayTicketsDao {
         return developers;
     }
     
-    public int numOfTickets(){
+    public int numOfTickets(String where){
         
         int numOfTickets = 0;
         Connection con = null;
@@ -100,7 +100,7 @@ public class DisplayTicketsDao {
         try
         {
             con = DBConnection.createConnection();
-            statement = con.prepareStatement("SELECT COUNT(id) from tickets");
+            statement = con.prepareStatement("SELECT COUNT(*) from tickets WHERE " + where);
             rs = statement.executeQuery(); 
             
             while(rs.next()){

@@ -18,37 +18,31 @@
     </head>
     <body>
         <%@ include file="navbar.jspf" %>
-        <% String user = (String)request.getSession().getAttribute("userName");%>
         
-        <h1>Welcome <%= user %>!</h1>
+        <div class="jumbotron">
+            <h1>Welcome ${sessionScope.userName}!</h1>
+        </div>
         
-        <%
-            String newTicket = (String)request.getAttribute("newTicket");
-            String fail = (String)request.getAttribute("failAdd");
-            
-            if(newTicket != null){ %>
-            <script language="javascript">
-                alert("Ticket successfully sent")
-            </script>
-            <% } else if(fail != null){ %>
-            <script language="javascript">
-                alert("Send failed. Please fill out required fields")
-            </script>
-        <% } %>
-        
-        <%
-            String userAdded = (String)request.getAttribute("newUser");
-            String userFailed = (String)request.getAttribute("fail");
-            if(userAdded != null){ %>
-            <script language="javascript">
-                alert("user successfully added")
-            </script>
-        <% } else if(userFailed != null){ %>
-            <script language="javascript">
-                alert("That is not a valid username. Please select a new username.")
-            </script>
-        <% }
-           java.text.DateFormat df = new java.text.SimpleDateFormat("MM/dd/yyyy"); %>
+        <c:if test="${newTicket != null}">
+        <script language="javascript">
+            alert("Ticket successfully sent")
+        </script>
+        </c:if>
+        <c:if test="${fail != null}">
+        <script language="javascript">
+            alert("Send failed. Please fill out required fields")
+        </script>
+        </c:if>
+        <c:if test="${userAdded != null}">
+        <script language="javascript">
+            alert("user successfully added")
+        </script>
+        </c:if>
+        <c:if test="${userFailed != null}">
+        <script language="javascript">
+            alert("That is not a valid username. Please select a new username.")
+        </script> 
+        </c:if>
         
         <br/>
         <%@ include file="footer.jspf" %>  

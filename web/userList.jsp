@@ -33,19 +33,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%
-                       List<UserBean> users = (ArrayList<UserBean>) request.getAttribute("users");
-                       for(UserBean user : users){
-                    %>
-
+                    <c:forEach items="${users}" var="user">
                     <tr>
-                        <td><%= user.getId()%></td>
-                        <td><%= user.getUsername()%></td>
-                        <td><%= user.getPassword()%></td>
-                        <td><%= user.getUserType()%></td>
-                        <td><%= user.getCompany()%></td>
+                        <td>${user.getId()}</td>
+                        <td>${user.getUsername()}</td>
+                        <td>${user.getPassword()}</td>
+                        <td>${user.getUserType()}</td>
+                        <td>${user.getCompany()}</td>
                     </tr>
-                    <% } %>
+                    </c:forEach>
                 </tbody>
             </table>
 
@@ -60,15 +56,15 @@
             </script>
         </span>
         
-        <form action="AddUser" method="POST" class="col-sm-offset-2 col-sm-8" id="addUserForm" style="display:none">
+        <form action="AddUser" method="POST" class="col-sm-offset-1 col-sm-10" id="addUserForm" style="display:none">
             <h4>Add User: </h4>
             <fieldset class="well ">
                 <div class="form-row">
-                    <div class="form-group col-sm-5">
+                    <div class="form-group col-sm-3">
                         <label for="username">Username: </label>
                         <input type="text" class="form-control" id="username" required>
                     </div>
-                    <div class="form-group col-sm-4">
+                    <div class="form-group col-sm-3">
                         <label for="password">Password: </label>
                         <input type="password" class="form-control" id="password" required>
                     </div>
@@ -78,6 +74,15 @@
                             <option disabled selected>Select User Type</option>
                             <option>developer</option>
                             <option>client</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="userType">Company </label>
+                        <select class="form-control" id="companyName" required>
+                            <option disabled selected>Select Company Name</option>
+                            <c:forEach items="${companies}" var="company">
+                            <option>${company}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>

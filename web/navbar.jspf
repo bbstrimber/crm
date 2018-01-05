@@ -16,10 +16,10 @@
                   <li class="active"><a href="Home"><i class="glyphicon glyphicon-home pull-left"></i>&nbsp;Home</a></li>
                   <li><a href="Tickets"><i class="fas fa-table"></i>&nbsp;Tickets</a></li>
                   <li><a href="NewTicket"><i class="fas fa-list-alt"></i>&nbsp;New Ticket</a></li>
-                  <%if(request.getSession().getAttribute("Admin") != null) { %>
+                  <c:if test="${Admin != null}">
                   <li><a href="Users"><i class="fas fa-user"></i>&nbsp;Users</a></li> 
                   <li><a href="Companies"><i class="fas fa-users"></i>&nbsp;Companies</a></li>
-                  <% } %>
+                  </c:if>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li><a href="LogoutServlet"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

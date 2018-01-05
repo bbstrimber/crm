@@ -39,8 +39,10 @@ public class DisplayUsersServlet extends HttpServlet {
         
         List<UserBean> users = displayUsersDao.displayUsers();
         
+        List<String> companies = displayUsersDao.displayCompanyNames();
         
         request.setAttribute("users", users); 
+        request.setAttribute("companies", companies);
         request.getRequestDispatcher("/userList.jsp").forward(request, response);
         
         

@@ -27,15 +27,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%
-                       List<CompanyBean> companies = (ArrayList<CompanyBean>) request.getAttribute("companies");
-                       for(CompanyBean company : companies){
-                    %>
+                    <c:forEach items="${companies}" var="company">
                     <tr>
-                        <td><%= company.getId()%></td>
-                        <td><%= company.getName()%></td>
+                        <td>${company.getId()}</td>
+                        <td>${company.getName()}</td>
                     </tr>
-                    <% } %>
+                    </c:forEach>
                 </tbody>
             </table>
         <button type="button" class="btn btn-primary" onclick="showForm()" id="showForm"><i class="fas fa-users"></i>+&nbsp;Add Company</button>
