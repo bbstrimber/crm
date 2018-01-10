@@ -72,7 +72,7 @@
                         <div class="input-group-addon">to</div>
                         <input type="date" name="dateMax" class="form-control" onchange="javascript:document.filter.submit();">
                     </div>-->
-                    <a href="Tickets" type="button" class="btn btn-default col-sm-3">Clear Filters</a>
+                    <a href="Tickets" type="button" class="btn btn-primary col-sm-3">Clear Filters</a>
                 </div>
             </fieldset>
             <c:if test="${numOfPages!=1}">

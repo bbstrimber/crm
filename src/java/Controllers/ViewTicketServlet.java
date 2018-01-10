@@ -42,7 +42,7 @@ public class ViewTicketServlet extends HttpServlet {
         
         TicketBean ticket = ViewTicketDao.displayTicket(id);
         
-        if(!ticket.getAttachmentName().isEmpty()){
+        if(ticket.getAttachmentName() != null){
             String mimeType = getServletContext().getMimeType(ticket.getAttachmentName());
             if (mimeType.startsWith("image/")) {
                 request.setAttribute("imageAttachment", ticket.getAttachmentName());

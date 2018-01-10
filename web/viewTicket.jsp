@@ -82,7 +82,7 @@
                         <td>${ticket.getStatus()}</td>
                         <td>${ticket.getDeveloper()}</td>
                         <c:choose>
-                            <c:when test="${!ticket.getAttachmentName().isEmpty()}">
+                            <c:when test="${ticket.getAttachmentName() != null}">
                                 <td>
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
                                         View Attachment
