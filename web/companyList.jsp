@@ -11,11 +11,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jspf" %> 
+        <%@ include file="/WEB-INF/jspf/header.jspf" %> 
         <title>Companies</title>
     </head>
     <body>
-        <%@ include file="navbar.jspf" %>
+        <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
         
         <span class="col-sm-offset-1 col-sm-10">
             <h2>Companies:</h2>
@@ -59,6 +59,6 @@
             </fieldset>
         </form>
         
-        <%@ include file="footer.jspf" %>
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>
     </body>
 </html>

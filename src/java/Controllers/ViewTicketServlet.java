@@ -42,6 +42,13 @@ public class ViewTicketServlet extends HttpServlet {
         
         TicketBean ticket = ViewTicketDao.displayTicket(id);
         
+        if(!ticket.getAttachmentName().isEmpty()){
+            String mimeType = getServletContext().getMimeType(ticket.getAttachmentName());
+            if (mimeType.startsWith("image/")) {
+                request.setAttribute("imageAttachment", ticket.getAttachmentName());
+            }
+        }
+        
         List<CommentBean> comments = ViewTicketDao.displayComments(id);
         
         List<String> developers = ViewTicketDao.displayDevelopers();

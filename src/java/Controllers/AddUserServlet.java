@@ -38,11 +38,13 @@ public class AddUserServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String userType = request.getParameter("userType");
+            String companyName = request.getParameter("companyName");
             
             UserBean addUserBean = new UserBean();
             addUserBean.setUsername(username); 
             addUserBean.setPassword(password);
             addUserBean.setUserType(userType);
+            addUserBean.setCompany(companyName);
             
             AddUserDao addUserDao = new AddUserDao();
 

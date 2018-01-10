@@ -69,9 +69,14 @@ public class AddTicketServlet extends HttpServlet {
             ticketBean.setContent(content);
             ticketBean.setStatus("new");
             ticketBean.setDeveloper("Not Assigned");
-            ticketBean.setAttachment(input);
-            ticketBean.setAttachmentName(attachmentName);            
-
+            if(!attachmentName.isEmpty()){
+                ticketBean.setAttachment(input);
+                ticketBean.setAttachmentName(attachmentName);            
+            }
+            else{
+                ticketBean.setAttachment(null);
+                ticketBean.setAttachmentName(null);
+            }
             AddTicketDao addTicketDao = new AddTicketDao();
 
             addTicketDao.addTicket(ticketBean);

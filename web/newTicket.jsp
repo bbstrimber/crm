@@ -8,11 +8,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jspf" %> 
+        <%@ include file="/WEB-INF/jspf/header.jspf" %> 
         <title>New Ticket</title>
     </head>
     <body>
-        <%@ include file="navbar.jspf" %>
+        <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
         
         
                 
@@ -44,6 +44,6 @@
             </fieldset>
         </form>
         
-        <%@ include file="footer.jspf" %> 
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %> 
     </body>
 </html>

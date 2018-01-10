@@ -14,11 +14,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jspf" %>
+        <%@ include file="/WEB-INF/jspf/header.jspf" %>
         <title>View Ticket</title>
     </head>
     <body>
-        <%@ include file="navbar.jspf" %>
+        <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
         <script language="javascript">
             
             function showHideSelect()
@@ -32,15 +32,7 @@
                     document.getElementById('assignSubmit').style.display="none";
                 }
             }
-            function viewAttachment()
-            {
-                document.getElementById('attachmentModel').style.display="block";
-                document.getElementById("caption").innerHTML = document.getElementById('attachment').alt;
-                
-                document.getElementsByClassName("close")[0].onclick = function() { 
-                document.getElementById('attachmentModel').style.display = "none";
-                };
-            }
+            
         </script>
         
         <c:set var="headerColspan" value="8" /> 
@@ -80,7 +72,7 @@
                     <tr>
                         <td>${ticket.getId()}</td>
                         <td>
-                            <fmt:formatDate value="${ticket.getDate()}" pattern="MM/dd/yyyy "/>
+                            <fmt:formatDate value="${ticket.getDate()}" pattern="MM/dd/yyyy"/>
                             </br>
                             <fmt:formatDate value="${ticket.getDate()}" pattern="hh:mm a"/>
                         </td>
@@ -90,15 +82,35 @@
                         <td>${ticket.getStatus()}</td>
                         <td>${ticket.getDeveloper()}</td>
                         <c:choose>
-                            <c:when test="${ticket.getAttachment() != null}">
+                            <c:when test="${!ticket.getAttachmentName().isEmpty()}">
                                 <td>
-                                    <button onclick="viewAttachment()">View Attachment </button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                                        View Attachment
+                                    </button>
                                     </br>
                                     ${ticket.getAttachmentName()}
-                                    <div id="attachmentModel" class="model">
-                                        <span class="close">&times;</span>
-                                        <img id="attachment" src="${pageContext.request.contextPath}/attachments/${ticket.getAttachmentName()}" alt="${ticket.getAttachmentName()}">
-                                        <div id="caption"></div>
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">${ticket.getAttachmentName()}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <c:choose>
+                                                        <c:when test="${imageAttachment != null}">
+                                                            <img id="attachment" class="img-responsive" src="${pageContext.request.contextPath}/attachments/${ticket.getAttachmentName()}" alt="${ticket.getAttachmentName()}">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <object id="attachment" data="${pageContext.request.contextPath}/attachments/${ticket.getAttachmentName()}" type='application/pdf' width='100%' height="500" style="height: 85vh;"></object>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                             </c:when>
@@ -192,5 +204,5 @@
             </fieldset>
         </span>
         
-        <%@ include file="footer.jspf" %>  
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>  
 </html>

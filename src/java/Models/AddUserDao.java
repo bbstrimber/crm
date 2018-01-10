@@ -26,10 +26,13 @@ public class AddUserDao {
         String username = addUserBean.getUsername(); 
         String password = addUserBean.getPassword();
         String userType = addUserBean.getUserType();
+        String companyName = addUserBean.getCompany();
+        int coId = 0;
         
         Connection con = null;
         PreparedStatement checkStatement = null;
         PreparedStatement updateStatement = null;
+        PreparedStatement findIdStatement = null;
         ResultSet rs = null;
         
        try
@@ -40,12 +43,20 @@ public class AddUserDao {
             rs = checkStatement.executeQuery(); 
             if(!rs.next()) 
             {
-                updateStatement = con.prepareStatement("INSERT INTO users (username, password, user_type) values (?, ?, ?)");
-                updateStatement.setString(1, username);
-                updateStatement.setString(2, password);
-                updateStatement.setString(3, userType);
-                updateStatement.executeUpdate();
-                return "SUCCESS";
+                
+                findIdStatement = con.prepareStatement("SELECT id FROM companies WHERE name = ?");
+                findIdStatement.setString(1, companyName);
+                rs = findIdStatement.executeQuery();
+                if(rs.next()){
+                    coId = rs.getInt("id"); 
+                    updateStatement = con.prepareStatement("INSERT INTO users (username, password, user_type, company_id) values (?, ?, ?, ?)");
+                    updateStatement.setString(1, username);
+                    updateStatement.setString(2, password);
+                    updateStatement.setString(3, userType);
+                    updateStatement.setInt(4, coId);
+                    updateStatement.executeUpdate();
+                    return "SUCCESS";
+                }
             }
             else
             {
@@ -56,8 +67,6 @@ public class AddUserDao {
         {
             e.printStackTrace();
         } 
-        
-        
         return "ERROR. User not added"; 
     }
 }

@@ -9,7 +9,7 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jspf" %> 
+        <%@ include file="/WEB-INF/jspf/header.jspf" %> 
         <title>Code Blue CRM Login Page</title>
         
     </head>
@@ -63,6 +63,6 @@ and open the template in the editor.
                 </tr>
             </table>
         </form>-->
-        <%@ include file="footer.jspf" %> 
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %> 
     </body>
 </html>

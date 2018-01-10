@@ -12,12 +12,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jspf" %> 
+        <%@ include file="/WEB-INF/jspf/header.jspf" %> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Users</title>
     </head>
     <body>
-        <%@ include file="navbar.jspf" %>
+        <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
         
         
         <span class="col-sm-offset-1 col-sm-10">
@@ -62,23 +62,23 @@
                 <div class="form-row">
                     <div class="form-group col-sm-3">
                         <label for="username">Username: </label>
-                        <input type="text" class="form-control" id="username" required>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="password">Password: </label>
-                        <input type="password" class="form-control" id="password" required>
+                        <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="userType">User Type: </label>
-                        <select class="form-control" id="userType" required>
+                        <select class="form-control" id="userType" name="userType" required>
                             <option disabled selected>Select User Type</option>
                             <option>developer</option>
                             <option>client</option>
                         </select>
                     </div>
                     <div class="form-group col-sm-3">
-                        <label for="userType">Company </label>
-                        <select class="form-control" id="companyName" required>
+                        <label for="companyName">Company </label>
+                        <select class="form-control" id="companyName" name="companyName" required>
                             <option disabled selected>Select Company Name</option>
                             <c:forEach items="${companies}" var="company">
                             <option>${company}</option>
@@ -92,6 +92,6 @@
             </fieldset>
         </form>
         
-        <%@ include file="footer.jspf" %>    
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>    
     </body>
 </html>

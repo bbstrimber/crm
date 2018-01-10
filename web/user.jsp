@@ -13,11 +13,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jspf" %> 
+        <%@ include file="/WEB-INF/jspf/header.jspf" %> 
         <title>Home</title>
     </head>
     <body>
-        <%@ include file="navbar.jspf" %>
+        <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
         
         <div class="jumbotron">
             <h1>Welcome ${sessionScope.userName}!</h1>
@@ -45,6 +45,6 @@
         </c:if>
         
         <br/>
-        <%@ include file="footer.jspf" %>  
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>  
     </body>
 </html>

@@ -12,10 +12,10 @@
 <html>
     <head>
         <title>Ticket List</title>
-        <%@ include file="header.jspf" %> 
+        <%@ include file="/WEB-INF/jspf/header.jspf" %> 
     </head>
     <body>
-        <%@ include file="navbar.jspf" %>
+        <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
     
         <span class="col-sm-offset-1 col-sm-10">
             <h2>Tickets</h2>
@@ -41,7 +41,6 @@
                         <input type="hidden" name="perPage" value="${perPage}"/>
                         <select class="form-control" id="developer" name="developer" onchange="this.form.submit()">
                             <option selected>By Developer</option>
-                            
                             <c:forEach items="${developers}" var="developer">
                             <option>${developer}</option>
                             </c:forEach>
@@ -76,74 +75,8 @@
                     <a href="Tickets" type="button" class="btn btn-default col-sm-3">Clear Filters</a>
                 </div>
             </fieldset>
-            
             <c:if test="${numOfPages!=1}">
-                <nav aria-label="pagination for tickets">
-                    <ul class="pagination">
-                        <c:if test="${pageNumber != 1}">
-                            <c:url var="myURLPrevious" value="Pagination?perPage=${perPage}&pageNumber=${pageNumber-1}&sort=${sort}">
-                                <c:choose>
-                                    <c:when test="${filterDeveloper != null}">
-                                        <c:param name="developer" value="${filterDeveloper}"/>
-                                    </c:when>
-                                    <c:when test="${filterStatus != null}">
-                                        <c:param name="status" value="${filterStatus}"/>
-                                    </c:when>
-                                </c:choose>
-                            </c:url>
-                            <li class="page-item"><a class="page-link" 
-                                href="${myURLPrevious}">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    Previous</a>
-                            </li>
-                        </c:if>
-
-                        <c:forEach begin="1" end="${numOfPages}" var="i">
-                            <c:choose>
-                                <c:when test="${pageNumber eq i}">
-                                    <li class="page-item active"><a class="page-link">
-                                            ${i} <span class="sr-only">(current)</span></a>
-                                    </li>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:url var="myURLNumber" value="Pagination?perPage=${perPage}&pageNumber=${i}&sort=${sort}">
-                                        <c:choose>
-                                            <c:when test="${filterDeveloper != null}">
-                                                <c:param name="developer" value="${filterDeveloper}"/>
-                                            </c:when>
-                                            <c:when test="${filterStatus != null}">
-                                                <c:param name="status" value="${filterStatus}"/>
-                                            </c:when>
-                                        </c:choose>
-                                    </c:url>
-            
-                                    <li class="page-item"><a class="page-link" 
-                                        href="${myURLNumber}">${i}</a>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-
-                        <c:if test="${pageNumber lt numOfPages}">
-                            <c:url var="myURLNext" value="Pagination?perPage=${perPage}&pageNumber=${pageNumber+1}&sort=${sort}">
-                                <c:choose>
-                                    <c:when test="${filterDeveloper != null}">
-                                        <c:param name="developer" value="${filterDeveloper}"/>
-                                    </c:when>
-                                    <c:when test="${filterStatus != null}">
-                                        <c:param name="status" value="${filterStatus}"/>
-                                    </c:when>
-                                </c:choose>
-                            </c:url>
-            
-                            <li class="page-item"><a class="page-link" 
-                                href="${myURLNext}">Next
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </a>
-                            </li>
-                        </c:if>              
-                    </ul>
-                </nav>
+                <%@ include file="/WEB-INF/jspf/pagination.jspf" %> 
             </c:if>
             <table id="ticketList" class="table table-hover table-responsive ">
                 <thead class="thead-light">
@@ -178,7 +111,10 @@
                     </tr>
                     </c:forEach>            
                 </tbody>
-            </table>     
+            </table>  
+            <c:if test="${perPage > 5}">
+                <%@ include file="/WEB-INF/jspf/pagination.jspf" %> 
+            </c:if>
             <a href="NewTicket" type="button" class="btn btn-default" id="newTicket">
                 <i class="fas fa-list-alt"></i>
                 &nbsp;New Ticket
@@ -187,6 +123,6 @@
                 
                
         <br/>
-        
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>    
     <body>
 </html>
