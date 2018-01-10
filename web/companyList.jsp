@@ -44,7 +44,7 @@
             </script>
         </span>
         
-        <form action="AddUser" method="POST" class="col-sm-offset-2 col-sm-8" id="addCompanyForm" style="display:none">
+        <form action="AddCompany" method="POST" class="col-sm-offset-2 col-sm-8" id="addCompanyForm" style="display:none">
             <h4>Add Company: </h4>
             <fieldset class="well ">
                 <div class="form-row">
