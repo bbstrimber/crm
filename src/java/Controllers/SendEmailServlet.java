@@ -1,13 +1,16 @@
-package Controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controllers;
 
-import Models.UpdateTicketDao;
+import Models.EmailDao;
 import java.io.IOException;
+import static java.lang.ProcessBuilder.Redirect.to;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Code Blue
+ * @author Blumie
  */
-@WebServlet(urlPatterns = {"/UpdateTicket"})
-public class UpdateTicketServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/SendEmail"})
+public class SendEmailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,41 +36,22 @@ public class UpdateTicketServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        int id = (int) request.getAttribute("updateTicket");
+        String status = (String) request.getAttribute("statusChanged");
+        String username = (String) request.getSession().getAttribute("userName");
+        String from = "blumie@codeblue.ventures";
+        String pass = "blumie1818";
+        String to = "blumie@codeblue.ventures";
+        String subject = "Ticket #" + id + " Status Updated";
+        String body = "Ticket #" + id + " status updated to '" + status + "' by " + username;
         
-        int id = Integer.parseInt(request.getParameter("id"));
-        String status = request.getParameter("status");
-        String developerName = null;
+        EmailDao email = new EmailDao();
+        email.sendEmail(from, pass, to, subject, body);
         
-        if(request.getParameter("developer") != null){
-            developerName = request.getParameter("developer");
-        }
+        request.getRequestDispatcher("ViewTicket").forward(request, response);
         
-        if(!"Update Status".equals(status)){
-            
-            UpdateTicketDao updateTicketDao = new UpdateTicketDao();
-            
-            updateTicketDao.updateStatus(id, status);
-
-            request.setAttribute("updateTicket", id);
-            request.setAttribute("statusChanged", status);
-            request.getRequestDispatcher("SendEmail").forward(request, response);
-                  
-        }
-        else if(!"Assign to Developer".equals(developerName) && developerName != null)
-        {
-            UpdateTicketDao updateTicketDao = new UpdateTicketDao();
-            updateTicketDao.updateDeveloper(id, developerName);
-
-            request.setAttribute("updateTicket", id);
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
-        }
-        else
-        {
-            request.setAttribute("failUpdate", id);
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
-        }
-    }
-
+    } 
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

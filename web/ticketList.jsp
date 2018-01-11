@@ -20,7 +20,7 @@
         <span class="col-sm-offset-1 col-sm-10">
             <h2>Tickets</h2>
             
-            <fieldset class="well">
+            <fieldset >
                 <h5><strong>Filter:</strong></h5>
                 <div class="row">
                     <form class="form col-sm-3" method="POST" action="Filter" name="filter">
@@ -112,7 +112,7 @@
                     </c:forEach>            
                 </tbody>
             </table>  
-            <c:if test="${perPage > 5}">
+            <c:if test="${perPage > 5 && numOfPages != 1}">
                 <%@ include file="/WEB-INF/jspf/pagination.jspf" %> 
             </c:if>
             <a href="NewTicket" type="button" class="btn btn-default" id="newTicket">
