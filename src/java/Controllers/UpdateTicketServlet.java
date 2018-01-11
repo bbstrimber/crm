@@ -50,7 +50,7 @@ public class UpdateTicketServlet extends HttpServlet {
 
             request.setAttribute("updateTicket", id);
             request.setAttribute("statusChanged", status);
-            request.getRequestDispatcher("SendEmail").forward(request, response);
+            request.getRequestDispatcher("SendEmailOnUpdate").forward(request, response);
                   
         }
         else if(!"Assign to Developer".equals(developerName) && developerName != null)

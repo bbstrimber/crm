@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Blumie
  */
-@WebServlet(urlPatterns = {"/SendEmail"})
-public class SendEmailServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/SendEmailOnUpdate"})
+public class SendEmailOnUpdateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
