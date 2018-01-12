@@ -3,9 +3,6 @@
     Created on : Dec 20, 2017, 11:18:36 AM
     Author     : Blumie
 --%>
-<%@page import="utils.TicketBean"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

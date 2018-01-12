@@ -31,8 +31,7 @@ public class DBConnection {
             {
                 e.printStackTrace();
             } 
-            con = DriverManager.getConnection(url, username, password); 
-            System.out.println("Printing connection object "+con);
+            con = DriverManager.getConnection(url, username, password);
         } 
         catch (Exception e) 
         {

@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("Admin", username);
                     session.setAttribute("userName", username);
-                    request.getRequestDispatcher("/user.jsp").forward(request, response);
+                    response.sendRedirect("Home");
                     break;
                 }
             case "developer":
@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("Developer", username);
                     session.setAttribute("userName", username);
-                    request.getRequestDispatcher("/user.jsp").forward(request, response);
+                    response.sendRedirect("Home");
                     break;
                 }
             case "client":
@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("Client", username);
                     session.setAttribute("userName", username);
-                    request.getRequestDispatcher("/user.jsp").forward(request, response);
+                    response.sendRedirect("Home");
                     break;
                 }
             default:
