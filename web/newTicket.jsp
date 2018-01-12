@@ -22,18 +22,18 @@
                 <div class="form-group">
                     <label for="title" class="control-label col-sm-2">Title: </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="title" required/>
+                        <input type="text" class="form-control" id="title" name="title" required/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="content" class="control-label col-sm-2">Content: </label>
                     <div class="col-sm-8">
-                        <textarea id="content" class="form-control" rows="5" required></textarea>
+                        <textarea id="content" name="content" class="form-control" rows="5" required></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-8">
-                        <input type="file" id="attachment" class="form-control-file" </td>
+                        <input type="file" id="attachment" name="attachment" class="form-control-file" </td>
                     </div>
                 </div>
                 <div class="form-group"> 

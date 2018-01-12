@@ -21,6 +21,7 @@ public class UpdateTicketDao {
     
     Connection con = null;
     PreparedStatement updateStatement = null;
+    PreparedStatement checkStatement = null;
     ResultSet rs = null;
     
     public void updateDeveloper( int id, String developer){
@@ -65,14 +66,21 @@ public class UpdateTicketDao {
         try
         {
             con = DBConnection.createConnection();
-            
-            updateStatement = con.prepareStatement("INSERT INTO comments (comment, author, ticket_id, client_view) values (?, ?, ?, ?)");
-            
-            updateStatement.setString(1, comment);
-            updateStatement.setString(2, author);
-            updateStatement.setInt(3, ticketId);
-            updateStatement.setString(4, clientView);
-            updateStatement.executeUpdate();
+            checkStatement = con.prepareStatement("SELECT * FROM comments WHERE author=? AND comment=? AND ticket_id=?");
+            checkStatement.setString(1, author);
+            checkStatement.setString(2, comment);
+            checkStatement.setInt(3, ticketId);
+            rs = checkStatement.executeQuery(); 
+            if(!rs.next()) 
+            {
+                updateStatement = con.prepareStatement("INSERT INTO comments (comment, author, ticket_id, client_view) values (?, ?, ?, ?)");
+
+                updateStatement.setString(1, comment);
+                updateStatement.setString(2, author);
+                updateStatement.setInt(3, ticketId);
+                updateStatement.setString(4, clientView);
+                updateStatement.executeUpdate();
+            }
             
         }
         catch(SQLException e)

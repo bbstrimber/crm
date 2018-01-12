@@ -45,7 +45,7 @@ public class DisplayTicketsServlet extends HttpServlet {
         if(request.getSession().getAttribute("Developer") != null){
             sort = " FIELD(status, 'Assigned') DESC,  id ";
             username = (String)request.getSession().getAttribute("Developer");
-            where += "AND developer= '" + username + "' ";
+            where += "AND developer= '" + username + "' " + "OR sender_name= '" + username + "' ";
         }
         else if(request.getSession().getAttribute("Client") != null)
         {

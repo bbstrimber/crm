@@ -41,28 +41,33 @@ public class AddTicketServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String senderName;
-        if(request.getSession().getAttribute("Client") != null){
+        if(request.getSession().getAttribute("Client") != null)
+        {
             senderName = (String) request.getSession().getAttribute("Client");
         }
-        else if(request.getSession().getAttribute("Developer") != null){
+        else if(request.getSession().getAttribute("Developer") != null)
+        {
             senderName = (String) request.getSession().getAttribute("Developer");
         }
-        else{
+        else
+        {
             senderName = "Admin";
         }
-        
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         
-        Part attachment = request.getPart("attachment"); 
-        String attachmentName = Paths.get(attachment.getSubmittedFileName()).getFileName().toString(); 
-        
-        InputStream input = attachment.getInputStream();
-        
-        
-        
         if(!"".equals(title) && !"".equals(content))
         {
+            Part attachment = request.getPart("attachment"); 
+            String attachmentName = "";
+            InputStream input = null;
+            if(attachment != null){
+                attachmentName = Paths.get(attachment.getSubmittedFileName()).getFileName().toString(); 
+                input = attachment.getInputStream();
+            }
+            
+            
+            
             TicketBean ticketBean = new TicketBean();
             ticketBean.setSenderName(senderName);
             ticketBean.setTitle(title);

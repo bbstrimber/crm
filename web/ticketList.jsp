@@ -32,7 +32,6 @@
                             </select>
                         </div>
                     </form>
-                    <c:if test="${Developer == null}">
                     <form class="form col-sm-3" method="POST" action="Filter" name="filter">
                     <div class="form-group">
                         <input type="hidden" name="perPage" value="${perPage}"/>
@@ -44,7 +43,6 @@
                         </select>
                     </div>
                     </form>
-                    </c:if>
                     <form class="form col-sm-3" method="POST" action="Filter" name="filter">
                     <div class="form-group">
                         <c:choose>
