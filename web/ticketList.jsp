@@ -95,13 +95,22 @@
                         <td>${ticket.getStatus()}</td>
                         <td>${ticket.getDeveloper()}</td>
                         <td class="text-center">
-                            <form action="ViewTicket" method="POST" id="viewTicket">
-                                <input type="hidden" name="id" value=${ticket.getId()}>
-                                <button type="submit" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-th-list pull-left"></span>
-                                    &nbsp;View Details
-                                </button>
-                            </form>
+                            <div class ="row">
+                                <div class="col-lg-2">
+                                    <c:if test="${ticket.getAttachmentName() != null}">
+                                        <i class="fas fa-paperclip"></i>
+                                    </c:if>
+                                </div>
+                                <div class="col-lg-10">
+                                    <form action="ViewTicket" method="POST" id="viewTicket">
+                                        <input type="hidden" name="id" value=${ticket.getId()}>
+                                        <button type="submit" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-th-list pull-left"></span>
+                                            &nbsp;View Details
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     </c:forEach>            

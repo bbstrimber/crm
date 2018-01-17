@@ -85,7 +85,7 @@
                             <c:when test="${ticket.getAttachmentName() != null}">
                                 <td>
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-                                        View Attachment
+                                        <i class="fas fa-paperclip"></i> View Attachment
                                     </button>
                                     </br>
                                     ${ticket.getAttachmentName()}
@@ -121,25 +121,31 @@
 
                         <c:if test="${Client == null}">
                             <td>
-                                <form action="UpdateTicket" method="POST" id="updateStatusForm" >
-                                    <input type="hidden" name="id" value=${ticket.getId()}>
-                                    <div class="form-group">
-                                        <select id="status" name="status" class="form-control input-sm" onchange="showHideSelect()">
-                                            <option selected>Update Status</option>
-                                            <option>new</option>
-                                            <option>Assigned</option>
-                                            <option>Working On</option>
-                                            <option>Resolved</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="updateTicketSubmit">Update</button>
-                                </form>
+                                <c:choose>
+                                    <c:when test="${ticket.getStatus() != 'Resolved' || Admin != null}">
+                                        <form action="UpdateTicket" method="POST" id="updateStatusForm" >
+                                            <input type="hidden" name="id" value=${ticket.getId()}>
+                                            <div class="form-group">
+                                                <select id="status" name="status" class="form-control input-sm" onchange="showHideSelect()">
+                                                    <option selected>Update Status</option>
+                                                    <option>Assigned</option>
+                                                    <option>Working On</option>
+                                                    <option>Resolved</option>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="updateTicketSubmit">Update</button>
+                                        </form>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <em class="text-muted">${ticket.getStatus()}</em>
+                                    </c:otherwise>
+                                </c:choose>
                             </td> 
                         </c:if>
                         <c:if test="${Admin != null}">
                             <td>
                                 <c:if test="${ticket.getDeveloper() eq 'Not Assigned'}">
-                                    <form action="UpdateTicketServlet" method="POST" id="assignForm">
+                                    <form action="UpdateTicket" method="POST" id="assignForm">
                                         <input type="hidden" name="id" value=${ticket.getId()}>
                                         <div class="form-check">
                                             <label class="form-check-label" id="assignLabel">

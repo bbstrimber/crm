@@ -7,10 +7,6 @@ package Controllers;
 
 import Models.EmailDao;
 import java.io.IOException;
-import static java.lang.ProcessBuilder.Redirect.to;
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,8 +38,16 @@ public class SendEmailOnUpdateServlet extends HttpServlet {
         String from = "blumie@codeblue.ventures";
         String pass = "blumie1818";
         String to = "blumie@codeblue.ventures";
+        
         String subject = "Ticket #" + id + " Status Updated";
         String body = "Ticket #" + id + " status updated to '" + status + "' by " + username;
+        if(request.getAttribute("statusChanged").equals("Assigned")){
+            String developer = (String) request.getAttribute("assignedDeveloper");
+            subject = "Ticket #" + id + " Assigned to a Developer";
+            body = "Ticket #" + id + " assigned to " + developer + ". Status updated to " + status + ".";
+        }
+        
+        
         
         EmailDao email = new EmailDao();
         email.sendEmail(from, pass, to, subject, body);

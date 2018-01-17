@@ -42,7 +42,7 @@ public class UpdateTicketServlet extends HttpServlet {
             developerName = request.getParameter("developer");
         }
         
-        if(!"Update Status".equals(status)){
+        if(!"Update Status".equals(status) && status != null){
             
             UpdateTicketDao updateTicketDao = new UpdateTicketDao();
             
@@ -59,7 +59,9 @@ public class UpdateTicketServlet extends HttpServlet {
             updateTicketDao.updateDeveloper(id, developerName);
 
             request.setAttribute("updateTicket", id);
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
+            request.setAttribute("statusChanged", "Assigned");
+            request.setAttribute("assignedDeveloper", developerName);
+            request.getRequestDispatcher("SendEmailOnUpdate").forward(request, response);
         }
         else
         {
