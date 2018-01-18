@@ -27,7 +27,6 @@
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Password</th>
                         <th scope="col">User Type</th>
                         <th scope="col">Company Name</th>
                     </tr>
@@ -37,7 +36,6 @@
                     <tr>
                         <td>${user.getId()}</td>
                         <td>${user.getUsername()}</td>
-                        <td>${user.getPassword()}</td>
                         <td>${user.getUserType()}</td>
                         <td>${user.getCompany()}</td>
                     </tr>

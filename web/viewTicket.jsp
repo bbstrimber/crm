@@ -21,31 +21,30 @@
         <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
         <script language="javascript">
             
-            function showHideSelect()
+            function showAssignForm()
             { 
-                if(document.getElementById('assign').checked) {
-                    document.getElementById('developerList').style.display="block";
-                    document.getElementById('assignSubmit').style.display="block";
-                }
-                if(!document.getElementById('assign').checked){
-                    document.getElementById('developerList').style.display="none";
-                    document.getElementById('assignSubmit').style.display="none";
+                var x = document.getElementById("assignForm");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
                 }
             }
-            
+            function showStatusForm() {
+                var x = document.getElementById("updateStatusForm");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
         </script>
         
         <c:set var="headerColspan" value="8" /> 
-        <c:if test="${Developer != null}">
-            <c:set var="headerColspan" value="9" /> 
-        </c:if>
-        <c:if test="${Admin != null}">
-            <c:set var="headerColspan" value="10" />
-        </c:if>
         
         <span class="col-sm-offset-1 col-sm-10">
-            <h2>View Ticket Details</h2>
-            <a href="Tickets" type="button" class="btn btn-link" > <span class="glyphicon glyphicon-chevron-left"></span>Back to Ticket List</a>
+            <h2>Ticket Details</h2>
+            <a href="Pagination?perPage=${perPage}&pageNumber=${pageNumber}&sort=${sort}" type="button" class="btn btn-link" > <span class="glyphicon glyphicon-chevron-left"></span>Back to Ticket List</a>
             <table id="ticketDetails" class="table table-bordered table-responsive">
                 <thead class="thead-light">
                     <tr>
@@ -60,12 +59,6 @@
                         <th scope="col">Status</th>
                         <th scope="col">Developer</th>
                         <th scope="col">View Attachment</th>
-                        <c:if test="${Client == null}">
-                            <th scope="col">Update Status</th>
-                        </c:if>
-                        <c:if test="${Admin != null}">
-                            <th>Assign</th>
-                        </c:if>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,8 +72,64 @@
                         <td>${ticket.getSenderName()}</td>
                         <td>${ticket.getTitle()}</td>
                         <td>${ticket.getContent()}</td>
-                        <td>${ticket.getStatus()}</td>
-                        <td>${ticket.getDeveloper()}</td>
+                        <td>
+                            ${ticket.getStatus()}
+                            <br>
+                            <c:if test="${Client == null}">
+                                <c:if test="${ticket.getStatus() != 'Resolved' || Admin != null}">
+                                    <button type="button" class="btn btn-default btn-sm" onclick="showStatusForm()">
+                                        <i class="fas fa-edit"></i> Update Status
+                                    </button>
+                                    
+                                    <form action="UpdateTicket" method="POST" id="updateStatusForm" style="display:none" >
+                                        <input type="hidden" name="id" value=${ticket.getId()}>
+                                        <input type="hidden" name="perPage" value=${perPage}>
+                                        <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                        <input type="hidden" name="sort" value=${sort}>
+                                        <div class="form-group" >
+                                            <select id="status" name="status" class="form-control input-sm" onchange="showHideSelect()">
+                                                <option selected>Update Status</option>
+                                                <option>Working On</option>
+                                                <option>Resolved</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="updateTicketSubmit">Update</button>
+                                    </form>
+                                </c:if>
+                            </c:if>
+                        </td>
+                        <td>
+                            ${ticket.getDeveloper()}
+                            <br>
+                            <c:if test="${Admin != null}">
+                                <button type="button" class="btn btn-default btn-sm" onclick="showAssignForm()">
+                                    <i class="fas fa-edit"></i> 
+                                    <c:choose>
+                                        <c:when test="${ticket.getStatus() eq 'new'}">
+                                          Assign to Developer
+                                        </c:when>
+                                        <c:otherwise>
+                                            Switch Developer
+                                        </c:otherwise>
+                                    </c:choose>
+                                </button>
+                                <form action="UpdateTicket" class="form" method="POST" id="assignForm" style="display:none">
+                                    <input type="hidden" name="id" value=${ticket.getId()}>
+                                    <input type="hidden" name="perPage" value=${perPage}>
+                                    <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                    <input type="hidden" name="sort" value=${sort}>
+                                    <div class="form-group">
+                                        <select class="form-control input-sm" id="developerList" name="developer">
+                                            <option disabled selected>Assign to Developer</option>
+                                            <c:forEach items="${developers}" var="developer">
+                                                <option>${developer}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="assignSubmit">Assign</button>
+                                </form>
+                            </c:if>
+                        </td>
                         <c:choose>
                             <c:when test="${ticket.getAttachmentName() != null}">
                                 <td>
@@ -118,59 +167,12 @@
                                 <td>No Attachment</td>
                             </c:otherwise>
                         </c:choose>
-
-                        <c:if test="${Client == null}">
-                            <td>
-                                <c:choose>
-                                    <c:when test="${ticket.getStatus() != 'Resolved' || Admin != null}">
-                                        <form action="UpdateTicket" method="POST" id="updateStatusForm" >
-                                            <input type="hidden" name="id" value=${ticket.getId()}>
-                                            <div class="form-group">
-                                                <select id="status" name="status" class="form-control input-sm" onchange="showHideSelect()">
-                                                    <option selected>Update Status</option>
-                                                    <option>Assigned</option>
-                                                    <option>Working On</option>
-                                                    <option>Resolved</option>
-                                                </select>
-                                            </div>
-                                            <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="updateTicketSubmit">Update</button>
-                                        </form>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <em class="text-muted">${ticket.getStatus()}</em>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td> 
-                        </c:if>
-                        <c:if test="${Admin != null}">
-                            <td>
-                                <c:if test="${ticket.getDeveloper() eq 'Not Assigned'}">
-                                    <form action="UpdateTicket" method="POST" id="assignForm">
-                                        <input type="hidden" name="id" value=${ticket.getId()}>
-                                        <div class="form-check">
-                                            <label class="form-check-label" id="assignLabel">
-                                              <input class="form-check-input" type="checkbox" id="assign" name="assign" onchange="showHideSelect()">
-                                                Assign to Developer
-                                            </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control input-sm" id="developerList" name="developer" style="display:none">
-                                                <option disabled selected>Assign to Developer</option>
-                                                <c:forEach items="${developers}" var="developer">
-                                                    <option>${developer}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="assignSubmit" style="display:none">Assign</button>
-                                    </form>
-                                </c:if>
-                            </td>
-                        </c:if>
-                        </br>
                     </tr>
-                    
-                </tbody>
+                </body>
             </table>
+            
+            </br>
+                    
             <fieldset class="well">
                 <h4>Comments</h4>
                 <div class="list-group">
@@ -185,7 +187,6 @@
                     </c:forEach>
                 </div>
                 <c:if test="${Client == null}"> 
-
                     <form action="AddComment" method="POST" id="addComment" class="form-horizontal">
                         <input type="hidden" name="id" value=${ticket.getId()}>
                         <div class="form-group row">
@@ -195,8 +196,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="clientView" class="col-sm-3">Can client view comment?</label>
-                            <div class="col-sm-9">
+                            <label for="clientView" class="col-sm-2" style="text-align:right">Can client view comment?</label>
+                            <div>
                                 <div class="form-check">
                                     <input class="form-check-input" name="clientView" type="checkbox">
                                 </div>

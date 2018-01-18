@@ -104,6 +104,9 @@
                                 <div class="col-lg-10">
                                     <form action="ViewTicket" method="POST" id="viewTicket">
                                         <input type="hidden" name="id" value=${ticket.getId()}>
+                                        <input type="hidden" name="perPage" value=${perPage}>
+                                        <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                        <input type="hidden" name="sort" value=${sort}>
                                         <button type="submit" class="btn btn-default">
                                             <span class="glyphicon glyphicon-th-list pull-left"></span>
                                             &nbsp;View Details
