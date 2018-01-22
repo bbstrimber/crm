@@ -133,11 +133,11 @@
                         <c:choose>
                             <c:when test="${ticket.getAttachmentName() != null}">
                                 <td>
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                                    ${ticket.getAttachmentName()}
+                                    </br>
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
                                         <i class="fas fa-paperclip"></i> View Attachment
                                     </button>
-                                    </br>
-                                    ${ticket.getAttachmentName()}
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">

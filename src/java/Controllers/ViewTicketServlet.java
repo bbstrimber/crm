@@ -39,6 +39,9 @@ public class ViewTicketServlet extends HttpServlet {
         ViewTicketDao ViewTicketDao = new ViewTicketDao();
         
         int id = Integer.parseInt(request.getParameter("id"));
+        int perPage = Integer.parseInt(request.getParameter("perPage"));
+        int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        String sort = request.getParameter("sort");
         
         TicketBean ticket = ViewTicketDao.displayTicket(id);
         
@@ -57,6 +60,9 @@ public class ViewTicketServlet extends HttpServlet {
         request.setAttribute("ticket", ticket); 
         request.setAttribute("comments", comments);
         request.setAttribute("developers", developers);
+        request.setAttribute("perPage", perPage);
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("sort", sort);
         request.getRequestDispatcher("/viewTicket.jsp").forward(request, response);
 
     }

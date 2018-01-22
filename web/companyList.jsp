@@ -18,7 +18,7 @@
         <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
         
         <span class="col-sm-offset-1 col-sm-10">
-            <h2>Companies:</h2>
+            <h2>Companies</h2>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>

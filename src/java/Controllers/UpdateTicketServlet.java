@@ -37,10 +37,17 @@ public class UpdateTicketServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         String status = request.getParameter("status");
         String developerName = null;
+        int perPage = Integer.parseInt(request.getParameter("perPage"));
+        int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        String sort = request.getParameter("sort");
         
         if(request.getParameter("developer") != null){
             developerName = request.getParameter("developer");
         }
+        
+        request.setAttribute("perPage", perPage);
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("sort", sort);
         
         if(!"Update Status".equals(status) && status != null){
             

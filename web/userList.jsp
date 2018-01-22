@@ -21,7 +21,7 @@
         
         
         <span class="col-sm-offset-1 col-sm-10">
-            <h2>Users:</h2>
+            <h2>Users</h2>
             <table class="table table-bordered table-striped">
                 <thead class="thead-light">
                     <tr>
