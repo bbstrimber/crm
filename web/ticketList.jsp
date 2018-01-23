@@ -25,12 +25,11 @@
             <br>
             <fieldset>
                 <div class="row">
-                    <h5 class="col-sm-1"><strong>Filter:</strong></h5>
                     <form class="form col-sm-3" method="POST" action="Filter" name="filter">
                         <div class="form-group">
                             <input type="hidden" name="perPage" value="${perPage}"/>
                             <select class="form-control" id="status" name="status" onchange="this.form.submit()">
-                                <option selected>By Status</option>
+                                <option selected>Filter By Status</option>
                                 <option>new</option>
                                 <option>Assigned</option>
                                 <option>Resolved</option>
@@ -42,7 +41,7 @@
                     <div class="form-group">
                         <input type="hidden" name="perPage" value="${perPage}"/>
                         <select class="form-control" id="developer" name="developer" onchange="this.form.submit()">
-                            <option selected>By Developer</option>
+                            <option selected>Filter By Developer</option>
                             <c:forEach items="${developers}" var="developer">
                             <option>${developer}</option>
                             </c:forEach>
@@ -73,7 +72,7 @@
                         <div class="input-group-addon">to</div>
                         <input type="date" name="dateMax" class="form-control" onchange="javascript:document.filter.submit();">
                     </div>-->
-                    <a href="Tickets" type="button" class="btn btn-primary col-sm-2">Clear Filters</a>
+                    <a href="Tickets" type="button" class="btn btn-primary col-sm-3">Clear Filters</a>
                 </div>
             </fieldset>
             <c:if test="${numOfPages!=1}">

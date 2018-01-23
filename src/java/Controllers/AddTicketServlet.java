@@ -74,7 +74,7 @@ public class AddTicketServlet extends HttpServlet {
             ticketBean.setTitle(title);
             ticketBean.setContent(content);
             ticketBean.setStatus("new");
-            ticketBean.setDeveloper("Not Assigned");
+            ticketBean.setDeveloper("Unassigned");
             ticketBean.setDate(date);
             
             if(!attachmentName.isEmpty()){
