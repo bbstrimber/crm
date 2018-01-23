@@ -20,7 +20,10 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailDao{
     
-    public void sendEmail(String from, String pass, String to, String subject, String body){
+    public void sendEmail(String subject, String body){
+        String from = "blumie@codeblue.ventures";
+        String pass = "blumie1818";
+        String to = "blumie@codeblue.ventures";
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
@@ -49,7 +52,7 @@ public class EmailDao{
             }*/
 
             message.setSubject(subject);
-            message.setText(body);
+            message.setContent(body, "text/html; charset=utf-8");
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());

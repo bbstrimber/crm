@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -31,6 +32,7 @@ public class AddTicketDao {
         String developer = addTicketBean.getDeveloper();
         InputStream input = addTicketBean.getAttachment();
         String attachmentName = addTicketBean.getAttachmentName();
+        Timestamp date = addTicketBean.getDate();
         
         Connection con = null;
         PreparedStatement updateStatement = null;
@@ -50,14 +52,15 @@ public class AddTicketDao {
             if(!rs.next()) 
             {
             
-                updateStatement = con.prepareStatement("INSERT INTO tickets (sender_name, title, content, status, developer, attachment, attachment_name) values (?, ?, ?, ?, ?, ?, ?)");
-                updateStatement.setString(1, senderName);
-                updateStatement.setString(2, title);
-                updateStatement.setString(3, content);
-                updateStatement.setString(4, status);
-                updateStatement.setString(5, developer);
-                updateStatement.setBinaryStream(6, input);
-                updateStatement.setString(7, attachmentName);
+                updateStatement = con.prepareStatement("INSERT INTO tickets (date, sender_name, title, content, status, developer, attachment, attachment_name) values (?, ?, ?, ?, ?, ?, ?, ?)");
+                updateStatement.setTimestamp(1, date);
+                updateStatement.setString(2, senderName);
+                updateStatement.setString(3, title);
+                updateStatement.setString(4, content);
+                updateStatement.setString(5, status);
+                updateStatement.setString(6, developer);
+                updateStatement.setBinaryStream(7, input);
+                updateStatement.setString(8, attachmentName);
 
                 updateStatement.executeUpdate();
             }

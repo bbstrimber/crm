@@ -7,6 +7,7 @@ package Controllers;
  */
 
 import Models.AddTicketDao;
+import Models.EmailDao;
 import utils.TicketBean;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,7 +67,7 @@ public class AddTicketServlet extends HttpServlet {
                 input = attachment.getInputStream();
             }
             
-            
+            java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
             
             TicketBean ticketBean = new TicketBean();
             ticketBean.setSenderName(senderName);
@@ -74,6 +75,8 @@ public class AddTicketServlet extends HttpServlet {
             ticketBean.setContent(content);
             ticketBean.setStatus("new");
             ticketBean.setDeveloper("Not Assigned");
+            ticketBean.setDate(date);
+            
             if(!attachmentName.isEmpty()){
                 ticketBean.setAttachment(input);
                 ticketBean.setAttachmentName(attachmentName);            
@@ -86,6 +89,12 @@ public class AddTicketServlet extends HttpServlet {
 
             addTicketDao.addTicket(ticketBean);
             request.setAttribute("newTicket", title);
+            
+            String emailSubject = "New Ticket";
+            String emailBody = "New Ticket sent from " + senderName + ". <br> \t Title: " + title + " <br> \t Content: " + content;
+            EmailDao emailDao = new EmailDao();
+            emailDao.sendEmail(emailSubject, emailBody);
+            
             request.getRequestDispatcher("Tickets").forward(request, response);
         }
         else

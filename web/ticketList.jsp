@@ -16,10 +16,16 @@
     
         <span class="col-sm-offset-1 col-sm-10">
             <h2>Tickets</h2>
-            
-            <fieldset >
-                <h5><strong>Filter:</strong></h5>
+            <br>
+            <a href="NewTicket" type="button" class="btn btn-primary" id="newTicket">
+                <i class="fas fa-list-alt"></i>
+                &nbsp;New Ticket
+            </a>
+            <br>
+            <br>
+            <fieldset>
                 <div class="row">
+                    <h5 class="col-sm-1"><strong>Filter:</strong></h5>
                     <form class="form col-sm-3" method="POST" action="Filter" name="filter">
                         <div class="form-group">
                             <input type="hidden" name="perPage" value="${perPage}"/>
@@ -67,7 +73,7 @@
                         <div class="input-group-addon">to</div>
                         <input type="date" name="dateMax" class="form-control" onchange="javascript:document.filter.submit();">
                     </div>-->
-                    <a href="Tickets" type="button" class="btn btn-primary col-sm-3">Clear Filters</a>
+                    <a href="Tickets" type="button" class="btn btn-primary col-sm-2">Clear Filters</a>
                 </div>
             </fieldset>
             <c:if test="${numOfPages!=1}">
@@ -122,10 +128,7 @@
             <c:if test="${perPage > 5 && numOfPages != 1}">
                 <%@ include file="/WEB-INF/jspf/pagination.jspf" %> 
             </c:if>
-            <a href="NewTicket" type="button" class="btn btn-default" id="newTicket">
-                <i class="fas fa-list-alt"></i>
-                &nbsp;New Ticket
-            </a>
+            
         </span>
                 
                

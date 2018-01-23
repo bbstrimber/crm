@@ -35,9 +35,6 @@ public class SendEmailOnUpdateServlet extends HttpServlet {
         int id = (int) request.getAttribute("updateTicket");
         String status = (String) request.getAttribute("statusChanged");
         String username = (String) request.getSession().getAttribute("userName");
-        String from = "blumie@codeblue.ventures";
-        String pass = "blumie1818";
-        String to = "blumie@codeblue.ventures";
         
         String subject = "Ticket #" + id + " Status Updated";
         String body = "Ticket #" + id + " status updated to '" + status + "' by " + username;
@@ -50,7 +47,7 @@ public class SendEmailOnUpdateServlet extends HttpServlet {
         
         
         EmailDao email = new EmailDao();
-        email.sendEmail(from, pass, to, subject, body);
+        email.sendEmail(subject, body);
         
         request.getRequestDispatcher("ViewTicket").forward(request, response);
         

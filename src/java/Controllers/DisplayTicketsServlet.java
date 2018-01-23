@@ -35,7 +35,7 @@ public class DisplayTicketsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String sort = "id";
+        String sort = " id ";
         String where = " 1=1 ";
         String username;
         String limitPerPage = " LIMIT ";
@@ -43,13 +43,11 @@ public class DisplayTicketsServlet extends HttpServlet {
         int pageNumber = 1;
         
         if(request.getSession().getAttribute("Developer") != null){
-            sort = " FIELD(status, 'Assigned') DESC,  id ";
             username = (String)request.getSession().getAttribute("Developer");
             where += "AND developer= '" + username + "' " + "OR sender_name= '" + username + "' ";
         }
         else if(request.getSession().getAttribute("Client") != null)
         {
-            sort = " id ";
             username = (String)request.getSession().getAttribute("Client");
             where += "AND sender_name= '" + username + "' ";
         }
