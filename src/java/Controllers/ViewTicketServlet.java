@@ -64,7 +64,7 @@ public class ViewTicketServlet extends HttpServlet {
         request.setAttribute("pageNumber", pageNumber);
         request.setAttribute("sort", sort);
         request.getRequestDispatcher("/viewTicket.jsp").forward(request, response);
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
