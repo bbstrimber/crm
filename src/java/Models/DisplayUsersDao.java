@@ -42,6 +42,7 @@ public class DisplayUsersDao {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
                 user.setUserType(rs.getString("user_type"));
                 user.setCompany(rs.getString("name"));
                 users.add(user);

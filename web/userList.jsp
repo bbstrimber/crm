@@ -27,6 +27,7 @@
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Username</th>
+                        <th scope="col">Email</th>
                         <th scope="col">User Type</th>
                         <th scope="col">Company Name</th>
                     </tr>
@@ -36,6 +37,7 @@
                     <tr>
                         <td>${user.getId()}</td>
                         <td>${user.getUsername()}</td>
+                        <td>${user.getEmail()}</td>
                         <td>${user.getUserType()}</td>
                         <td>${user.getCompany()}</td>
                     </tr>
