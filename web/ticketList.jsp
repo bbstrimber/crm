@@ -17,10 +17,47 @@
         <span class="col-sm-offset-1 col-sm-10">
             <h2>Tickets</h2>
             <br>
-            <a href="NewTicket" type="button" class="btn btn-primary" id="newTicket">
+            <button type="button" class="btn btn-primary" id="newTicket" data-toggle="modal" data-target="#newTicketForm">
                 <i class="fas fa-list-alt"></i>
-                &nbsp;New Ticket
-            </a>
+                New Ticket
+            </button>
+            
+            <div class="modal fade" id="newTicketForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">New Ticket</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="AddTicket" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="title" class="control-label col-sm-2">Title: </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="title" name="title" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content" class="control-label col-sm-2">Content: </label>
+                                    <div class="col-sm-8">
+                                        <textarea id="content" name="content" class="form-control" rows="5" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-8">
+                                        <input type="file" id="attachment" name="attachment" class="form-control-file" </td>
+                                    </div>
+                                </div>
+                                <div class="form-group"> 
+                                    <div class="col-sm-offset-2 col-sm-8">
+                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <br>
             <br>
             <fieldset>

@@ -45,50 +45,59 @@
 
             <br/>
 
-            <button type="button" class="btn btn-primary" onclick="showForm()" id="showForm"><i class="fas fa-user-plus"></i>&nbsp;Add User</button>
-            <script language="javascript">
-                function showForm() {
-                    document.getElementById("addUserForm").style.display="block";
-                    document.getElementById("showForm").style.display="none";
-                }
-            </script>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserForm">
+                <i class="fas fa-user-plus"></i>
+                Add User</button>
+            </button>
         </span>
         
-        <form action="AddUser" method="POST" class="col-sm-offset-1 col-sm-10" id="addUserForm" style="display:none">
-            <h4>Add User: </h4>
-            <fieldset class="well ">
-                <div class="form-row">
-                    <div class="form-group col-sm-3">
-                        <label for="username">Username: </label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+        <div class="modal fade" id="addUserForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Add User</h4>
                     </div>
-                    <div class="form-group col-sm-3">
-                        <label for="password">Password: </label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="userType">User Type: </label>
-                        <select class="form-control" id="userType" name="userType" required>
-                            <option disabled selected>Select User Type</option>
-                            <option>developer</option>
-                            <option>client</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="companyName">Company </label>
-                        <select class="form-control" id="companyName" name="companyName" required>
-                            <option disabled selected>Select Company Name</option>
-                            <c:forEach items="${companies}" var="company">
-                            <option>${company}</option>
-                            </c:forEach>
-                        </select>
+                    <div class="modal-body">
+                        <form action="AddUser" method="POST" id="addUserForm">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="username">Username: </label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="password">Password: </label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="userType">User Type: </label>
+                                    <select class="form-control" id="userType" name="userType" required>
+                                        <option disabled selected>Select User Type</option>
+                                        <option>developer</option>
+                                        <option>client</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="companyName">Company </label>
+                                    <select class="form-control" id="companyName" name="companyName" required>
+                                        <option disabled selected>Select Company Name</option>
+                                        <c:forEach items="${companies}" var="company">
+                                        <option>${company}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="text-center"> 
+                                <button type="submit" class="btn btn-primary">Add User</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="text-center"> 
-                    <button type="submit" class="btn btn-primary">Add User</button>
-                </div>
-            </fieldset>
-        </form>
+            </div>
+        </div>
         
         <%@ include file="/WEB-INF/jspf/footer.jspf" %>    
     </body>

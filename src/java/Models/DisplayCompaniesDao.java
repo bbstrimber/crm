@@ -38,6 +38,9 @@ public class DisplayCompaniesDao {
                 CompanyBean company = new CompanyBean();
                 company.setId(rs.getInt("id"));
                 company.setName(rs.getString("name"));
+                company.setCity(rs.getString("city"));
+                company.setState(rs.getString("state"));
+                company.setZip(rs.getString("zip"));
                 companies.add(company);
             }
         }

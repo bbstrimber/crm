@@ -23,6 +23,9 @@ public class AddCompanyDao {
     {
         
         String name = addCompanyBean.getName();
+        String city = addCompanyBean.getCity();
+        String state = addCompanyBean.getState();
+        String zip = addCompanyBean.getZip();
         
         Connection con = null;
         PreparedStatement checkStatement = null;
@@ -37,8 +40,11 @@ public class AddCompanyDao {
             rs = checkStatement.executeQuery(); 
             if(!rs.next()) 
             {
-                updateStatement = con.prepareStatement("INSERT INTO companies (name) values (?)");
+                updateStatement = con.prepareStatement("INSERT INTO companies (name, city, state, zip) values (?, ?, ?, ?)");
                 updateStatement.setString(1, name);
+                updateStatement.setString(2, city);
+                updateStatement.setString(3, state);
+                updateStatement.setString(4, zip);
                 updateStatement.executeUpdate();
                 return "SUCCESS";
             }
