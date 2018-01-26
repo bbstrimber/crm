@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -61,7 +62,7 @@ public class UpdateTicketDao {
             e.printStackTrace();
         } 
     }
-    public void addComment(String comment, String author, int ticketId, String clientView){
+    public void addComment(String comment, String author, Timestamp date, int ticketId, String clientView){
          
         try
         {
@@ -73,15 +74,34 @@ public class UpdateTicketDao {
             rs = checkStatement.executeQuery(); 
             if(!rs.next()) 
             {
-                updateStatement = con.prepareStatement("INSERT INTO comments (comment, author, ticket_id, client_view) values (?, ?, ?, ?)");
+                updateStatement = con.prepareStatement("INSERT INTO comments (comment, author, date, ticket_id, client_view) values (?, ?, ?, ?, ?)");
 
                 updateStatement.setString(1, comment);
                 updateStatement.setString(2, author);
-                updateStatement.setInt(3, ticketId);
-                updateStatement.setString(4, clientView);
+                updateStatement.setTimestamp(3, date);
+                updateStatement.setInt(4, ticketId);
+                updateStatement.setString(5, clientView);
                 updateStatement.executeUpdate();
             }
             
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void editComment(int commentId, String comment, String clientView){
+        
+        try
+        {
+            con = DBConnection.createConnection();
+            updateStatement = con.prepareStatement("UPDATE comments SET comment=?, client_view=? WHERE id=?");
+
+            updateStatement.setString(1, comment);
+            updateStatement.setString(2, clientView);
+            updateStatement.setInt(3, commentId);
+            updateStatement.executeUpdate();
         }
         catch(SQLException e)
         {

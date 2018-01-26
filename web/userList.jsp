@@ -73,6 +73,12 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <div class="form-group col-sm-offset-1 col-sm-10">
+                                    <label for="password">Email: </label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group col-sm-6">
                                     <label for="userType">User Type: </label>
                                     <select class="form-control" id="userType" name="userType" required>

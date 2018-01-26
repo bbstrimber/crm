@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Blumie
  */
-@WebServlet(urlPatterns = {"/AddComment"})
-public class AddCommentServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/Comment"})
+public class CommentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,6 +33,10 @@ public class AddCommentServlet extends HttpServlet {
             throws ServletException, IOException {
         
         int id = Integer.parseInt(request.getParameter("id"));
+        int commentId = 0;
+        if (request.getParameterMap().containsKey("commentId")){
+            commentId = Integer.parseInt(request.getParameter("commentId"));
+        }
         String comment = "";
         if(request.getParameter("comment")!= null){
             comment = request.getParameter("comment");
@@ -42,7 +46,7 @@ public class AddCommentServlet extends HttpServlet {
             clientView = "true";
         }
         
-        
+        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
         if(!comment.isEmpty())
         {
             String author = null;
@@ -53,11 +57,16 @@ public class AddCommentServlet extends HttpServlet {
             {
                 author = (String) request.getSession().getAttribute("Developer");
             }
+            
             UpdateTicketDao updateTicketDao = new UpdateTicketDao();
-            updateTicketDao.addComment(comment, author, id, clientView);
-
-            request.setAttribute("addComment", id);
-
+            if(commentId > 0){
+                updateTicketDao.editComment(commentId, comment, clientView);
+            }
+            else
+            {
+                updateTicketDao.addComment(comment, author, date, id, clientView);
+                request.setAttribute("addComment", id);
+            }
             request.getRequestDispatcher("ViewTicket").forward(request, response);
         }
     }

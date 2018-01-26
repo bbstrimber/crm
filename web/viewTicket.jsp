@@ -176,19 +176,86 @@
             <fieldset class="well">
                 <h4>Comments</h4>
                 <div class="list-group">
-                    <c:forEach items="${comments}" var="comment">
+                    <c:forEach items="${comments}" var="comment" varStatus="vs">
                         <c:if test="${Client == null || comment.getClientView() eq 'true'}">
                             <div class="list-group-item">
                                 <h5 class="list-group-item-heading">${comment.getComment()}</h5>
                                 <p class="list-group-item-text text-muted">-${comment.getAuthor()}</p>
                                 <p class="list-group-item-text text-muted"><fmt:formatDate value="${comment.getDate()}" pattern="MM/dd/yyyy hh:mm a"/></p>
+                                <jsp:useBean id="now" class="java.util.Date" scope="request"/>
+                                
+                                <c:if test="${Client == null}">
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#editComment${vs.index}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <div class="modal fade" id="editComment${vs.index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Edit Comment</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="Comment" method="POST" class="form">
+                                                        <input type="hidden" name="id" value=${ticket.getId()}>
+                                                        <input type="hidden" name="commentId" value=${comment.getId()}>
+                                                        <input type="hidden" name="perPage" value=${perPage}>
+                                                        <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                                        <input type="hidden" name="sort" value=${sort}>
+                                                        <div class="form-row">
+                                                            <textarea name="comment" class="form-control" rows="2">${comment.getComment()}</textarea>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <div class="form-check">
+                                                                <label for="clientView" style="text-align:right">
+                                                                <c:choose>
+                                                                    <c:when test="${comment.getClientView() eq 'true'}">
+                                                                        Can client view? <input class="form-check-input" name="clientView" type="checkbox" checked>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        Can client view? <input class="form-check-input" name="clientView" type="checkbox"> 
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-row text-center"> 
+                                                            <button type="submit" class="btn btn-primary">Edit Comment</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${comment.getAuthor() eq userName}">
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteComment${vs.index}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                    <div class="modal fade" id="deleteComment${vs.index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Delete Comment</h4>
+                                                </div>
+                                                <div class="modal-body">   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
                             </div>
                         </c:if>
                     </c:forEach>
                 </div>
                 <c:if test="${Client == null}"> 
-                    <form action="AddComment" method="POST" id="addComment" class="form-horizontal">
+                    <form action="Comment" method="POST" id="addComment" class="form-horizontal">
                         <input type="hidden" name="id" value=${ticket.getId()}>
+                        <input type="hidden" name="perPage" value=${perPage}>
+                        <input type="hidden" name="pageNumber" value=${pageNumber}>
+                        <input type="hidden" name="sort" value=${sort}>
                         <div class="form-group row">
                             <label for="comment" class="control-label col-sm-2">Add Comment </label>
                             <div class="col-sm-10">

@@ -44,7 +44,7 @@
         
         
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCoForm">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-users"></i>+
                 Add Company
             </button>
         </span>
