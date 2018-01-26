@@ -240,7 +240,20 @@
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                     <h4 class="modal-title" id="myModalLabel">Delete Comment</h4>
                                                 </div>
-                                                <div class="modal-body">   
+                                                <div class="modal-body">
+                                                    <form action="Comment" method="POST" class="form">
+                                                        <input type="hidden" name="id" value=${ticket.getId()}>
+                                                        <input type="hidden" name="commentId" value=${comment.getId()}>
+                                                        <input type="hidden" name="perPage" value=${perPage}>
+                                                        <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                                        <input type="hidden" name="sort" value=${sort}>
+                                                        <div class="form row text-center">
+                                                            <h5>Are you sure you want to delete this comment?</h5>
+                                                        </div>
+                                                        <div class="form-row text-center"> 
+                                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Comment</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
