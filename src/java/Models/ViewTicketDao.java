@@ -9,8 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import utils.AttachmentBean;
 import utils.CommentBean;
 import utils.DBConnection;
 import utils.TicketBean;
@@ -48,8 +51,8 @@ public class ViewTicketDao {
                 ticket.setContent(rs.getString("content"));
                 ticket.setStatus(rs.getString("status"));
                 ticket.setDeveloper(rs.getString("developer"));
-                ticket.setAttachment(rs.getBinaryStream("attachment"));
-                ticket.setAttachmentName(rs.getString("attachment_name"));
+                /*ticket.setAttachment(rs.getBinaryStream("attachment"));
+                ticket.setAttachmentName(rs.getString("attachment_name"));*/
             }
             
         }
@@ -59,6 +62,44 @@ public class ViewTicketDao {
         }
         
         return ticket;
+    }
+    
+    public List<AttachmentBean> displayAttachments(int id){
+        
+        List<AttachmentBean> attachments = new ArrayList<AttachmentBean>();
+        
+        Connection con = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        
+        try
+        {
+            con = DBConnection.createConnection();
+            
+            statement = con.prepareStatement("SELECT * FROM attachments WHERE ticket_id=?");
+            
+            statement.setInt(1, id);
+            
+            rs = statement.executeQuery(); 
+            
+            while(rs.next()){
+                
+                AttachmentBean attachment = new AttachmentBean();
+                attachment.setId(rs.getInt("id"));
+                attachment.setAttachment(rs.getBinaryStream("attachment"));
+                attachment.setAttachmentName(rs.getString("attachment_name"));
+                attachment.setTicketId(rs.getInt("ticket_id"));
+                
+                attachments.add(attachment);
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return attachments;
     }
     
     public List<CommentBean> displayComments(int id){
@@ -85,7 +126,12 @@ public class ViewTicketDao {
                 comment.setDate(rs.getTimestamp("date"));
                 comment.setTicketId(rs.getInt("ticket_id"));
                 comment.setClientView(rs.getString("client_view"));
-                
+                Instant then = rs.getTimestamp("date").toInstant();
+                Instant now = Instant.now();
+                Instant twentyFourHoursEarlier = now.minus( 24 , ChronoUnit.HOURS );
+                // Is that moment (a) not before 24 hours ago, AND (b) before now (not in the future)?
+                Boolean within24Hours = ( ! then.isBefore( twentyFourHoursEarlier ) ) &&  then.isBefore( now ) ;
+                comment.setWithin24Hrs(within24Hours);
                 comments.add(comment);
             }
             

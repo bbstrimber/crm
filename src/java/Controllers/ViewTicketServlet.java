@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.AttachmentBean;
 import utils.CommentBean;
 import utils.TicketBean;
 
@@ -45,17 +46,21 @@ public class ViewTicketServlet extends HttpServlet {
         String sort = request.getParameter("sort");
         
         TicketBean ticket = ViewTicketDao.displayTicket(id);
+        List<AttachmentBean> attachments = ViewTicketDao.displayAttachments(id);
         
-        if(ticket.getAttachment() != null){
-            String fileName = new File(ticket.getAttachmentName()).getName();
-            int dotIndex = fileName.lastIndexOf('.');
-            String fileExtension = (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
-            if(!"docx".equals(fileExtension) && !"doc".equals(fileExtension)){
-                String mimeType = getServletContext().getMimeType(ticket.getAttachmentName());
-                if (mimeType.startsWith("image/")){
-                    request.setAttribute("imageAttachment", ticket.getAttachmentName());
+        if(attachments != null){
+            for(AttachmentBean attachment : attachments){
+                String fileName = new File(attachment.getAttachmentName()).getName();
+                int dotIndex = fileName.lastIndexOf('.');
+                String fileExtension = (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
+                if(!"docx".equals(fileExtension) && !"doc".equals(fileExtension)){
+                    String mimeType = getServletContext().getMimeType(attachment.getAttachmentName());
+                    if (mimeType.startsWith("image/")){
+                        request.setAttribute("imageAttachment", attachment.getAttachmentName());
+                    }
                 }
             }
+            request.setAttribute("attachments", attachments);
         }
         
         List<CommentBean> comments = ViewTicketDao.displayComments(id);

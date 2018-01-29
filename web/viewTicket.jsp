@@ -131,36 +131,38 @@
                             </c:if>
                         </td>
                         <c:choose>
-                            <c:when test="${ticket.getAttachmentName() != null}">
+                            <c:when test="${attachments != null}">
                                 <td>
-                                    ${ticket.getAttachmentName()}
-                                    </br>
-                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
-                                        <i class="fas fa-paperclip"></i> View Attachment
-                                    </button>
-                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel">${ticket.getAttachmentName()}</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <c:choose>
-                                                        <c:when test="${imageAttachment != null}">
-                                                            <img id="attachment" class="img-responsive" src="${pageContext.request.contextPath}/attachments/${ticket.getAttachmentName()}" alt="${ticket.getAttachmentName()}">
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <object id="attachment" data="${pageContext.request.contextPath}/attachments/${ticket.getAttachmentName()}" type='application/pdf' width='100%' height="500" style="height: 85vh;"></object>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <c:forEach items="${attachments}" var="attachment">
+                                        ${attachment.getAttachmentName()}
+                                        </br>
+                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+                                            <i class="fas fa-paperclip"></i> View Attachment
+                                        </button>
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">${attachment.getAttachmentName()}</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <c:choose>
+                                                            <c:when test="${imageAttachment != null}">
+                                                                <img id="attachment" class="img-responsive" src="${pageContext.request.contextPath}/attachments/${attachment.getAttachmentName()}" alt="${attachment.getAttachmentName()}">
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <object id="attachment" data="${pageContext.request.contextPath}/attachments/${attachment.getAttachmentName()}" type='application/pdf' width='100%' height="500" style="height: 85vh;"></object>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:forEach>
                                 </td>
                             </c:when>
                             <c:otherwise>
@@ -182,9 +184,8 @@
                                 <h5 class="list-group-item-heading">${comment.getComment()}</h5>
                                 <p class="list-group-item-text text-muted">-${comment.getAuthor()}</p>
                                 <p class="list-group-item-text text-muted"><fmt:formatDate value="${comment.getDate()}" pattern="MM/dd/yyyy hh:mm a"/></p>
-                                <jsp:useBean id="now" class="java.util.Date" scope="request"/>
                                 
-                                <c:if test="${Client == null}">
+                                <c:if test="${Client == null && comment.isWithin24Hrs()}">
                                     <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#editComment${vs.index}">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -202,6 +203,7 @@
                                                         <input type="hidden" name="perPage" value=${perPage}>
                                                         <input type="hidden" name="pageNumber" value=${pageNumber}>
                                                         <input type="hidden" name="sort" value=${sort}>
+                                                        <input type="hidden" name="commentAction" value="addEdit">
                                                         <div class="form-row">
                                                             <textarea name="comment" class="form-control" rows="2">${comment.getComment()}</textarea>
                                                         </div>
@@ -228,36 +230,38 @@
                                             </div>
                                         </div>
                                     </div>
-                                </c:if>
-                                <c:if test="${comment.getAuthor() eq userName}">
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteComment${vs.index}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                    <div class="modal fade" id="deleteComment${vs.index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel">Delete Comment</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="Comment" method="POST" class="form">
-                                                        <input type="hidden" name="id" value=${ticket.getId()}>
-                                                        <input type="hidden" name="commentId" value=${comment.getId()}>
-                                                        <input type="hidden" name="perPage" value=${perPage}>
-                                                        <input type="hidden" name="pageNumber" value=${pageNumber}>
-                                                        <input type="hidden" name="sort" value=${sort}>
-                                                        <div class="form row text-center">
-                                                            <h5>Are you sure you want to delete this comment?</h5>
-                                                        </div>
-                                                        <div class="form-row text-center"> 
-                                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Comment</button>
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                        </div>
+                                
+                                    <c:if test="${comment.getAuthor() eq userName}">
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteComment${vs.index}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        <div class="modal fade" id="deleteComment${vs.index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Delete Comment</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="Comment" method="POST" class="form">
+                                                            <input type="hidden" name="id" value=${ticket.getId()}>
+                                                            <input type="hidden" name="commentId" value=${comment.getId()}>
+                                                            <input type="hidden" name="perPage" value=${perPage}>
+                                                            <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                                            <input type="hidden" name="sort" value=${sort}>
+                                                            <input type="hidden" name="commentAction" value="delete">
+                                                            <div class="form row text-center">
+                                                                <h5>Are you sure you want to delete this comment?</h5>
+                                                            </div>
+                                                            <div class="form-row text-center"> 
+                                                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Comment</button>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </c:if>
                             </div>
                         </c:if>
@@ -269,6 +273,7 @@
                         <input type="hidden" name="perPage" value=${perPage}>
                         <input type="hidden" name="pageNumber" value=${pageNumber}>
                         <input type="hidden" name="sort" value=${sort}>
+                        <input type="hidden" name="commentAction" value="addEdit">
                         <div class="form-group row">
                             <label for="comment" class="control-label col-sm-2">Add Comment </label>
                             <div class="col-sm-10">

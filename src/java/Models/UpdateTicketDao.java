@@ -108,5 +108,21 @@ public class UpdateTicketDao {
             e.printStackTrace();
         }
     }
+    public void deleteComment(int commentId){
+        
+        try
+        {
+            con = DBConnection.createConnection();
+            updateStatement = con.prepareStatement("DELETE FROM comments WHERE id = ?");
+            
+            updateStatement.setInt(1, commentId);
+            updateStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
     
 }

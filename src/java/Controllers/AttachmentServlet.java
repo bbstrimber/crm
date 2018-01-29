@@ -25,7 +25,7 @@ import utils.DBConnection;
 @WebServlet("/attachments/*")
 public class AttachmentServlet extends HttpServlet {
 
-    private static final String SQL_FIND = "SELECT attachment FROM tickets WHERE attachment_name = ?";
+    private static final String SQL_FIND = "SELECT attachment FROM attachments WHERE attachment_name = ?";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

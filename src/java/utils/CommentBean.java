@@ -20,8 +20,8 @@ public class CommentBean implements Serializable {
     private Timestamp date;
     private int ticketId;
     private String clientView;
+    private boolean Within24Hrs;
 
-    
     public int getId() {
         return id;
     }
@@ -70,5 +70,12 @@ public class CommentBean implements Serializable {
         this.clientView = clientView;
     }
 
+    public boolean isWithin24Hrs() {
+        return Within24Hrs;
+    }
+
+    public void setWithin24Hrs(boolean isWithin24Hrs) {
+        this.Within24Hrs = isWithin24Hrs;
+    }
     
 }

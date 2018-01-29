@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import utils.AttachmentBean;
 
 /**
  *
@@ -77,17 +78,15 @@ public class AddTicketServlet extends HttpServlet {
             ticketBean.setDeveloper("Unassigned");
             ticketBean.setDate(date);
             
-            if(!attachmentName.isEmpty()){
-                ticketBean.setAttachment(input);
-                ticketBean.setAttachmentName(attachmentName);            
-            }
-            else{
-                ticketBean.setAttachment(null);
-                ticketBean.setAttachmentName(null);
-            }
             AddTicketDao addTicketDao = new AddTicketDao();
-
             addTicketDao.addTicket(ticketBean);
+            
+            if(!attachmentName.isEmpty()){
+                AttachmentBean attachmentBean = new AttachmentBean();
+                attachmentBean.setAttachment(input);
+                attachmentBean.setAttachmentName(attachmentName);            
+            }
+            
             request.setAttribute("newTicket", title);
             
             String emailSubject = "New Ticket";

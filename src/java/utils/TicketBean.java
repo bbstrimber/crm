@@ -4,7 +4,6 @@ package utils;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.io.InputStream;
 
 
 
@@ -27,8 +26,8 @@ public class TicketBean implements Serializable{
     private String content;
     private String status;
     private String developer;
-    private InputStream attachment;
-    private String attachmentName;
+    /*private InputStream attachment;
+    private String attachmentName;*/
     
     public int getId() {
         return id;
@@ -85,23 +84,5 @@ public class TicketBean implements Serializable{
     public void setDeveloper(String developer) {
         this.developer = developer;
     }
-
-    public InputStream getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(InputStream attachment) {
-        this.attachment = attachment;
-    }
-
-    public String getAttachmentName() {
-        return attachmentName;
-    }
-
-    public void setAttachmentName(String attachmentName) {
-        this.attachmentName = attachmentName;
-    }
-
     
-
 }

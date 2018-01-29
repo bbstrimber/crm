@@ -32,43 +32,54 @@ public class CommentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int id = Integer.parseInt(request.getParameter("id"));
+        String commentAction = request.getParameter("commentAction");
         int commentId = 0;
         if (request.getParameterMap().containsKey("commentId")){
             commentId = Integer.parseInt(request.getParameter("commentId"));
         }
-        String comment = "";
-        if(request.getParameter("comment")!= null){
-            comment = request.getParameter("comment");
-        }
-        String clientView = "false";
-        if(request.getParameter("clientView") != null){
-            clientView = "true";
-        }
         
-        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-        if(!comment.isEmpty())
-        {
-            String author = null;
-            if(request.getSession().getAttribute("Admin") != null){
-                author = (String) request.getSession().getAttribute("Admin");
-            }
-            else
-            {
-                author = (String) request.getSession().getAttribute("Developer");
-            }
-            
-            UpdateTicketDao updateTicketDao = new UpdateTicketDao();
-            if(commentId > 0){
-                updateTicketDao.editComment(commentId, comment, clientView);
-            }
-            else
-            {
-                updateTicketDao.addComment(comment, author, date, id, clientView);
-                request.setAttribute("addComment", id);
-            }
-            request.getRequestDispatcher("ViewTicket").forward(request, response);
+        UpdateTicketDao updateTicketDao = new UpdateTicketDao();
+        switch(commentAction){
+            case "addEdit":
+                int ticketId = Integer.parseInt(request.getParameter("id"));
+                String comment = "";
+                if(request.getParameter("comment")!= null){
+                    comment = request.getParameter("comment");
+                }
+                String clientView = "false";
+                if(request.getParameter("clientView") != null){
+                    clientView = "true";
+                }
+
+                java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+                if(!comment.isEmpty())
+                {
+                    String author = null;
+                    if(request.getSession().getAttribute("Admin") != null){
+                        author = (String) request.getSession().getAttribute("Admin");
+                    }
+                    else
+                    {
+                        author = (String) request.getSession().getAttribute("Developer");
+                    }
+                    if(commentId > 0)
+                    {
+                        updateTicketDao.editComment(commentId, comment, clientView);
+                    }
+                    else
+                    {
+                        updateTicketDao.addComment(comment, author, date, ticketId, clientView);
+                        request.setAttribute("addComment", ticketId);
+                    }
+                }
+                break;
+            case "delete":
+                updateTicketDao.deleteComment(commentId);
+                break;
         }
+            
+        request.getRequestDispatcher("ViewTicket").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

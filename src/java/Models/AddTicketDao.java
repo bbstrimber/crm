@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import utils.AttachmentBean;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,8 +31,8 @@ public class AddTicketDao {
         String content = addTicketBean.getContent();
         String status = addTicketBean.getStatus();
         String developer = addTicketBean.getDeveloper();
-        InputStream input = addTicketBean.getAttachment();
-        String attachmentName = addTicketBean.getAttachmentName();
+        /*InputStream input = addTicketBean.getAttachment();
+        String attachmentName = addTicketBean.getAttachmentName();*/
         Timestamp date = addTicketBean.getDate();
         
         Connection con = null;
@@ -52,15 +53,15 @@ public class AddTicketDao {
             if(!rs.next()) 
             {
             
-                updateStatement = con.prepareStatement("INSERT INTO tickets (date, sender_name, title, content, status, developer, attachment, attachment_name) values (?, ?, ?, ?, ?, ?, ?, ?)");
+                updateStatement = con.prepareStatement("INSERT INTO tickets (date, sender_name, title, content, status, developer) values (?, ?, ?, ?, ?, ?)", updateStatement.RETURN_GENERATED_KEYS);
                 updateStatement.setTimestamp(1, date);
                 updateStatement.setString(2, senderName);
                 updateStatement.setString(3, title);
                 updateStatement.setString(4, content);
                 updateStatement.setString(5, status);
                 updateStatement.setString(6, developer);
-                updateStatement.setBinaryStream(7, input);
-                updateStatement.setString(8, attachmentName);
+                /*updateStatement.setBinaryStream(7, input);
+                updateStatement.setString(8, attachmentName);*/
 
                 updateStatement.executeUpdate();
             }
@@ -71,6 +72,24 @@ public class AddTicketDao {
             e.printStackTrace();
             
         } 
+    }
+    
+    public void addAttachment(AttachmentBean attachmentBean){
+        
+        Connection con = null;
+        PreparedStatement updateStatement = null;
+        ResultSet rs = null;
+        
+        try
+        {
+            updateStatement = con.prepareStatement("INSERT INTO attachments (attachment, attachment_name, ticket_id), VALUES (?, ?, ?)");
+            if(rs.next()){
+                
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
     
 }
