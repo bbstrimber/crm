@@ -26,6 +26,7 @@ public class TicketBean implements Serializable{
     private String content;
     private String status;
     private String developer;
+    private boolean hasAttachment = false;
     /*private InputStream attachment;
     private String attachmentName;*/
     
@@ -83,6 +84,14 @@ public class TicketBean implements Serializable{
 
     public void setDeveloper(String developer) {
         this.developer = developer;
+    }
+
+    public boolean hasAttachment() {
+        return hasAttachment;
+    }
+
+    public void setHasAttachment(boolean hasAttachment) {
+        this.hasAttachment = hasAttachment;
     }
     
 }

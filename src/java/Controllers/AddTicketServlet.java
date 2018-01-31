@@ -12,6 +12,8 @@ import utils.TicketBean;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -60,14 +62,6 @@ public class AddTicketServlet extends HttpServlet {
         
         if(!"".equals(title) && !"".equals(content))
         {
-            Part attachment = request.getPart("attachment"); 
-            String attachmentName = "";
-            InputStream input = null;
-            if(attachment != null){
-                attachmentName = Paths.get(attachment.getSubmittedFileName()).getFileName().toString(); 
-                input = attachment.getInputStream();
-            }
-            
             java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
             
             TicketBean ticketBean = new TicketBean();
@@ -79,12 +73,24 @@ public class AddTicketServlet extends HttpServlet {
             ticketBean.setDate(date);
             
             AddTicketDao addTicketDao = new AddTicketDao();
-            addTicketDao.addTicket(ticketBean);
+            int ticketId = addTicketDao.addTicket(ticketBean);
             
-            if(!attachmentName.isEmpty()){
-                AttachmentBean attachmentBean = new AttachmentBean();
-                attachmentBean.setAttachment(input);
-                attachmentBean.setAttachmentName(attachmentName);            
+            List<Part> attachments = request.getParts().stream().filter(part -> "attachment".equals(part.getName())).collect(Collectors.toList()); 
+            //Part attachment = request.getPart("attachment"); 
+            String attachmentName = "";
+            InputStream input = null;
+            
+            if(attachments != null){
+                for(Part attachment : attachments)
+                {
+                    attachmentName = Paths.get(attachment.getSubmittedFileName()).getFileName().toString(); 
+                    input = attachment.getInputStream();
+                    AttachmentBean attachmentBean = new AttachmentBean();
+                    attachmentBean.setAttachment(input);
+                    attachmentBean.setAttachmentName(attachmentName);
+                    attachmentBean.setTicketId(ticketId);
+                    addTicketDao.addAttachment(attachmentBean);
+                }
             }
             
             request.setAttribute("newTicket", title);

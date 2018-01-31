@@ -6,10 +6,7 @@
     Author     : Code Blue
 --%>
 
-<%@page import="utils.CommentBean"%>
-<%@page import="utils.TicketBean"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -38,6 +35,14 @@
                     x.style.display = "none";
                 }
             }
+            function showAttachmentForm() {
+                var x = document.getElementById("addAttachmentForm");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
         </script>
         
         <c:set var="headerColspan" value="8" /> 
@@ -58,7 +63,7 @@
                         <th scope="col">Content</th>
                         <th scope="col">Status</th>
                         <th scope="col">Developer</th>
-                        <th scope="col">View Attachment</th>
+                        <th scope="col">View Attachment(s)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -130,16 +135,16 @@
                                 </form>
                             </c:if>
                         </td>
-                        <c:choose>
-                            <c:when test="${attachments != null}">
-                                <td>
-                                    <c:forEach items="${attachments}" var="attachment">
-                                        ${attachment.getAttachmentName()}
-                                        </br>
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
-                                            <i class="fas fa-paperclip"></i> View Attachment
-                                        </button>
-                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <td>
+                            <c:choose>
+                                <c:when test="${!attachments.isEmpty()}">
+                                    <c:forEach items="${attachments}" var="attachment" varStatus="vs">
+                                        <a href="#" data-toggle="tooltip" title="${attachment.getAttachmentName()}">
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#attachment${vs.index}">
+                                                <i class="fas fa-paperclip"></i>
+                                            </button>
+                                        </a>
+                                        <div class="modal fade" id="attachment${vs.index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -163,12 +168,25 @@
                                             </div>
                                         </div>
                                     </c:forEach>
-                                </td>
-                            </c:when>
-                            <c:otherwise>
-                                <td>No Attachment</td>
-                            </c:otherwise>
-                        </c:choose>
+                                
+                                </c:when>
+                                <c:otherwise>
+                                No Attachment
+                                </c:otherwise>
+                            </c:choose>
+                            <br>
+                            <button type="button" class="btn btn-default btn-sm" onclick="showAttachmentForm()">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> Add Attachment
+                            </button>
+                            <form action="AddAttachment" method="POST" enctype="multipart/form-data" id="addAttachmentForm"  style="display:none">
+                                <input type="hidden" name="id" value=${ticket.getId()}>
+                                    <input type="hidden" name="perPage" value=${perPage}>
+                                    <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                    <input type="hidden" name="sort" value=${sort}>
+                                <input type="file" id="attachment" name="attachment" class="form-control-file" multiple="multiple"/>
+                                <button type="submit" class="btn btn-default btn-sm" name="addAttachment">Add Attachment</button>
+                            </form>
+                        </td>
                     </tr>
                 </body>
             </table>

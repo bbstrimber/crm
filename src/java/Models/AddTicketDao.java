@@ -24,7 +24,7 @@ import utils.AttachmentBean;
  */
 public class AddTicketDao {
     
-    public void addTicket(TicketBean addTicketBean) 
+    public int addTicket(TicketBean addTicketBean) 
     {
         String senderName = addTicketBean.getSenderName(); 
         String title = addTicketBean.getTitle();
@@ -39,10 +39,10 @@ public class AddTicketDao {
         PreparedStatement updateStatement = null;
         ResultSet rs = null;
         PreparedStatement checkStatement = null;
+        int ticketId = -1;
         
         try 
         {
-            
             con = DBConnection.createConnection();
             
             checkStatement = con.prepareStatement("SELECT * FROM tickets WHERE sender_name=? AND title=? AND content=?");
@@ -64,6 +64,11 @@ public class AddTicketDao {
                 updateStatement.setString(8, attachmentName);*/
 
                 updateStatement.executeUpdate();
+                ResultSet rs2 = updateStatement.getGeneratedKeys();
+                if(rs2.next()){
+                    ticketId = rs2.getInt(1);
+                }
+                
             }
             
         }
@@ -72,20 +77,25 @@ public class AddTicketDao {
             e.printStackTrace();
             
         } 
+        return ticketId;
     }
     
     public void addAttachment(AttachmentBean attachmentBean){
         
         Connection con = null;
         PreparedStatement updateStatement = null;
-        ResultSet rs = null;
+        InputStream input = attachmentBean.getAttachment();
+        String attachmentName = attachmentBean.getAttachmentName();
+        int ticketId = attachmentBean.getTicketId();
         
         try
         {
-            updateStatement = con.prepareStatement("INSERT INTO attachments (attachment, attachment_name, ticket_id), VALUES (?, ?, ?)");
-            if(rs.next()){
-                
-            }
+            con = DBConnection.createConnection();
+            updateStatement = con.prepareStatement("INSERT INTO attachments (attachment, attachment_name, ticket_id) VALUES (?, ?, ?)");
+            updateStatement.setBinaryStream(1, input);
+            updateStatement.setString(2, attachmentName);
+            updateStatement.setInt(3, ticketId);
+            updateStatement.executeUpdate();
         }
         catch(SQLException e){
             e.printStackTrace();

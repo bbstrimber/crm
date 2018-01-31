@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import utils.CompanyBean;
 import utils.DBConnection;
-import utils.UserBean;
 
 /**
  *

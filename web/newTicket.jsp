@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-8">
-                        <input type="file" id="attachment" name="attachment" class="form-control-file" </td>
+                        <input type="file" id="attachment" name="attachment" class="form-control-file" multiple="multiple"/>
                     </div>
                 </div>
                 <div class="form-group"> 
