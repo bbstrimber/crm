@@ -22,7 +22,7 @@
                   </c:if>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="LogoutServlet"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                  <li><a href="Logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
             </div>
         </div>

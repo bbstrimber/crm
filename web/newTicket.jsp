@@ -32,6 +32,16 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="priority" class="control-label col-sm-2">Priority</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="priority" name="priority">
+                            <option selected>Medium</option>
+                            <option>Low</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-8">
                         <input type="file" id="attachment" name="attachment" class="form-control-file" multiple="multiple"/>
                     </div>

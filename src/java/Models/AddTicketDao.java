@@ -29,6 +29,7 @@ public class AddTicketDao {
         String senderName = addTicketBean.getSenderName(); 
         String title = addTicketBean.getTitle();
         String content = addTicketBean.getContent();
+        String priority = addTicketBean.getPriority();
         String status = addTicketBean.getStatus();
         String developer = addTicketBean.getDeveloper();
         /*InputStream input = addTicketBean.getAttachment();
@@ -53,13 +54,14 @@ public class AddTicketDao {
             if(!rs.next()) 
             {
             
-                updateStatement = con.prepareStatement("INSERT INTO tickets (date, sender_name, title, content, status, developer) values (?, ?, ?, ?, ?, ?)", updateStatement.RETURN_GENERATED_KEYS);
+                updateStatement = con.prepareStatement("INSERT INTO tickets (date, sender_name, title, content, priority, status, developer) values (?, ?, ?, ?, ?, ?, ?)", updateStatement.RETURN_GENERATED_KEYS);
                 updateStatement.setTimestamp(1, date);
                 updateStatement.setString(2, senderName);
                 updateStatement.setString(3, title);
                 updateStatement.setString(4, content);
-                updateStatement.setString(5, status);
-                updateStatement.setString(6, developer);
+                updateStatement.setString(5, priority);
+                updateStatement.setString(6, status);
+                updateStatement.setString(7, developer);
                 /*updateStatement.setBinaryStream(7, input);
                 updateStatement.setString(8, attachmentName);*/
 

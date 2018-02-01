@@ -24,6 +24,7 @@ public class TicketBean implements Serializable{
     private String senderName;
     private String title;
     private String content;
+    private String priority;
     private String status;
     private String developer;
     private boolean hasAttachment = false;
@@ -69,7 +70,15 @@ public class TicketBean implements Serializable{
     public void setContent(String content) {
         this.content = content;
     }
+    
+    public String getPriority() {
+        return priority;
+    }
 
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+    
     public String getStatus() {
         return status;
     }
@@ -93,5 +102,6 @@ public class TicketBean implements Serializable{
     public void setHasAttachment(boolean hasAttachment) {
         this.hasAttachment = hasAttachment;
     }
+
     
 }

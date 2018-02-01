@@ -44,6 +44,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="priority" class="control-label col-sm-2">Priority</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="priority" name="priority">
+                                            <option selected>Medium</option>
+                                            <option>Low</option>
+                                            <option>High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-8">
                                         <input type="file" id="attachment" name="attachment" class="form-control-file" multiple="multiple"/>
                                     </div>
@@ -120,6 +130,7 @@
 
                     <tr>
                         <th scope="col"><a href="Sort?sort=id&perPage=${perPage}">Id</a></th>
+                        <th scope="col"><a href="Sort?sort=priority&perPage=${perPage}">Priority</a></th>
                         <th scope="col"><a href="Sort?sort=date&perPage=${perPage}">Date</a></th>
                         <th scope="col"><a href="Sort?sort=title&perPage=${perPage}">Title</a></th>
                         <th scope="col"><a href="Sort?sort=status&perPage=${perPage}">Status</a></th>
@@ -132,6 +143,22 @@
                     <c:forEach items="${ticketList}" var="ticket">
                     <tr>
                         <td>${ticket.getId()}</td>
+                        <td>
+                            <a href="#" data-toggle="tooltip" title="${ticket.getPriority()}">
+                            <c:choose>
+                                <c:when test="${ticket.getPriority() eq 'Low'}">
+                                    <i class="far fa-flag fa-lg " style="color: gold"></i>
+                                </c:when>
+                                <c:when test="${ticket.getPriority() eq 'High'}">
+                                    <i class="fas fa-flag fa-lg" style="color: red"></i>
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="far fa-flag fa-lg" style="color: #419641"></i>
+                                </c:otherwise>
+                            </c:choose>
+                            </a>
+                            <p class="text-muted">${ticket.getPriority()}</p>
+                        </td>
                         <td><fmt:formatDate value="${ticket.getDate()}" pattern="MM/dd/yyyy"/></td>
                         <td>${ticket.getTitle()}</td>
                         <td>${ticket.getStatus()}</td>

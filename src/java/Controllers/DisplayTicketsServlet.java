@@ -54,6 +54,9 @@ public class DisplayTicketsServlet extends HttpServlet {
         
         if(request.getAttribute("sort")!= null){
             sort = (String) request.getAttribute("sort");
+            if(sort.equals("priority")){
+                sort = "FIELD(priority, 'Low', 'Medium', 'High')";
+            }
         }
         if(request.getAttribute("status") != null){
             String status = (String) request.getAttribute("status");
@@ -97,6 +100,9 @@ public class DisplayTicketsServlet extends HttpServlet {
         request.setAttribute("perPage", perPage);
         request.setAttribute("pageNumber", pageNumber);
         request.setAttribute("numOfPages", numOfPages);
+        if(sort.equals("FIELD(priority, 'Low', 'Medium', 'High')")){
+            sort = "priority";
+        }
         request.setAttribute("sort", sort);
         
         

@@ -43,9 +43,10 @@
                     x.style.display = "none";
                 }
             }
+            
         </script>
         
-        <c:set var="headerColspan" value="8" /> 
+        <c:set var="headerColspan" value="9" /> 
         
         <span class="col-sm-offset-1 col-sm-10">
             <h2>Ticket Details</h2>
@@ -57,6 +58,7 @@
                     </tr>
                     <tr>
                         <th scope="col">Id</th>
+                        <th scope="col">Priority</th>
                         <th scope="col">Date</th>
                         <th scope="col">Sent From</th>
                         <th scope="col">Title</th>
@@ -69,6 +71,20 @@
                 <tbody>
                     <tr>
                         <td>${ticket.getId()}</td>
+                        <td class="text-center">
+                            <c:choose>
+                                <c:when test="${ticket.getPriority() eq 'Low'}">
+                                    <i class="far fa-flag fa-lg " id="priority" style="color: gold"></i>
+                                </c:when>
+                                <c:when test="${ticket.getPriority() eq 'High'}">
+                                    <i class="fas fa-flag fa-lg" id="priority" style="color: red"></i>
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="far fa-flag fa-lg" id="priority" style="color: #419641"></i>
+                                </c:otherwise>
+                            </c:choose>
+                            ${ticket.getPriority()}
+                        </td>
                         <td>
                             <fmt:formatDate value="${ticket.getDate()}" pattern="MM/dd/yyyy"/>
                             </br>

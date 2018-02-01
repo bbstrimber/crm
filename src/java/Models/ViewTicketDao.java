@@ -49,6 +49,7 @@ public class ViewTicketDao {
                 ticket.setSenderName(rs.getString("sender_name"));
                 ticket.setTitle(rs.getString("title"));
                 ticket.setContent(rs.getString("content"));
+                ticket.setPriority(rs.getString("priority"));
                 ticket.setStatus(rs.getString("status"));
                 ticket.setDeveloper(rs.getString("developer"));
                 /*ticket.setAttachment(rs.getBinaryStream("attachment"));

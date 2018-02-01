@@ -27,16 +27,58 @@
                         <th scope="col">City</th>
                         <th scope="col">State</th>
                         <th scope="col">Zip Code</th>
+                        <th scope="col">View Users</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${companies}" var="company">
+                    <c:forEach items="${companies}" var="company" varStatus="vs">
                     <tr>
                         <td>${company.getId()}</td>
                         <td>${company.getName()}</td>
                         <td>${company.getCity()}</td>
                         <td>${company.getState()}</td>
                         <td>${company.getZip()}</td>
+                        <td>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#viewUsers${vs.index}">
+                                <i class="fas fa-user"></i>
+                                View Users
+                            </button>
+                            <div class="modal fade" id="viewUsers${vs.index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">${company.getName()}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-bordered table-striped">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Id</th>
+                                                        <th scope="col">Username</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">User Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${company.getUsers()}" var="user">
+                                                    <tr>
+                                                        <td>${user.getId()}</td>
+                                                        <td>${user.getUsername()}</td>
+                                                        <td>${user.getEmail()}</td>
+                                                        <td>${user.getUserType()}</td>
+                                                    </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     </c:forEach>
                 </tbody>

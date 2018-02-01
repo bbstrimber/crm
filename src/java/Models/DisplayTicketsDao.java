@@ -34,7 +34,7 @@ public class DisplayTicketsDao {
         {
             con = DBConnection.createConnection();
             
-            String sql = "SELECT id, date, title, status, developer, "
+            String sql = "SELECT id, date, title, priority, status, developer, "
                     + "(SELECT COUNT(attachments.id) FROM attachments WHERE attachments.ticket_id = tickets.id) as attachment_count"
                     + " FROM tickets WHERE " + where + " ORDER BY " + sort + limitPerPage;
             //String sql = "SELECT * FROM tickets ORDER BY FIELD(status, 'new') DESC,  " + sort;
@@ -49,6 +49,7 @@ public class DisplayTicketsDao {
                 ticket.setId(rs.getInt("id"));
                 ticket.setDate(rs.getTimestamp("date"));
                 ticket.setTitle(rs.getString("title"));
+                ticket.setPriority(rs.getString("priority"));
                 ticket.setStatus(rs.getString("status"));
                 ticket.setDeveloper(rs.getString("developer"));
                 

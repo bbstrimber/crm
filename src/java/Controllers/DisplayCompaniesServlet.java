@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utils.CompanyBean;
+import utils.UserBean;
 
 /**
  *
@@ -37,7 +38,6 @@ public class DisplayCompaniesServlet extends HttpServlet {
         DisplayCompaniesDao displayCompaniesDao = new DisplayCompaniesDao();
         
         List<CompanyBean> companies = displayCompaniesDao.displayCompanies();
-        
         
         request.setAttribute("companies", companies); 
         request.getRequestDispatcher("/companyList.jsp").forward(request, response);

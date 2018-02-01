@@ -6,6 +6,7 @@
 package utils;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -18,6 +19,7 @@ public class CompanyBean implements Serializable {
     private String city;
     private String state;
     private String zip;
+    private List<UserBean> users;
 
     public int getId() {
         return id;
@@ -57,6 +59,14 @@ public class CompanyBean implements Serializable {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public List<UserBean> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserBean> users) {
+        this.users = users;
     }
     
 }

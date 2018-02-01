@@ -59,6 +59,7 @@ public class AddTicketServlet extends HttpServlet {
         }
         String title = request.getParameter("title");
         String content = request.getParameter("content");
+        String priority = request.getParameter("priority");
         
         if(!"".equals(title) && !"".equals(content))
         {
@@ -68,6 +69,7 @@ public class AddTicketServlet extends HttpServlet {
             ticketBean.setSenderName(senderName);
             ticketBean.setTitle(title);
             ticketBean.setContent(content);
+            ticketBean.setPriority(priority);
             ticketBean.setStatus("new");
             ticketBean.setDeveloper("Unassigned");
             ticketBean.setDate(date);
