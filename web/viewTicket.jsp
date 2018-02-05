@@ -74,16 +74,16 @@
                         <td class="text-center">
                             <c:choose>
                                 <c:when test="${ticket.getPriority() eq 'Low'}">
-                                    <i class="far fa-flag fa-lg " id="priority" style="color: gold"></i>
+                                    <p style="color: gold">${ticket.getPriority()} </p>
                                 </c:when>
                                 <c:when test="${ticket.getPriority() eq 'High'}">
-                                    <i class="fas fa-flag fa-lg" id="priority" style="color: red"></i>
+                                    <p style="color: red">${ticket.getPriority()} </p>
                                 </c:when>
                                 <c:otherwise>
-                                    <i class="far fa-flag fa-lg" id="priority" style="color: #419641"></i>
+                                    <p style="color: #419641">${ticket.getPriority()} </p>
                                 </c:otherwise>
                             </c:choose>
-                            ${ticket.getPriority()}
+                            
                         </td>
                         <td>
                             <fmt:formatDate value="${ticket.getDate()}" pattern="MM/dd/yyyy"/>
@@ -169,7 +169,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <c:choose>
-                                                            <c:when test="${imageAttachment != null}">
+                                                            <c:when test="${attachment.getAttachmentType() eq 'image'}">
                                                                 <img id="attachment" class="img-responsive" src="${pageContext.request.contextPath}/attachments/${attachment.getAttachmentName()}" alt="${attachment.getAttachmentName()}">
                                                             </c:when>
                                                             <c:otherwise>

@@ -56,7 +56,7 @@ public class ViewTicketServlet extends HttpServlet {
                 if(!"docx".equals(fileExtension) && !"doc".equals(fileExtension)){
                     String mimeType = getServletContext().getMimeType(attachment.getAttachmentName());
                     if (mimeType.startsWith("image/")){
-                        request.setAttribute("imageAttachment", attachment.getAttachmentName());
+                        attachment.setAttachmentType("image");
                     }
                 }
             }

@@ -51,36 +51,61 @@ public class DisplayTicketsServlet extends HttpServlet {
             username = (String)request.getSession().getAttribute("Client");
             where += "AND sender_name= '" + username + "' ";
         }
-        
-        if(request.getAttribute("sort")!= null){
-            sort = (String) request.getAttribute("sort");
+        if(request.getParameterMap().containsKey("sort")) {
+            sort = (String) request.getParameter("sort");
             if(sort.equals("priority")){
                 sort = "FIELD(priority, 'Low', 'Medium', 'High')";
             }
         }
-        if(request.getAttribute("status") != null){
-            String status = (String) request.getAttribute("status");
-            where += " AND status = '" + status + "' ";
-            request.setAttribute("filterStatus", status);
+        
+        if(request.getParameterMap().containsKey("status")) {
+            if(!request.getParameter("status").equals("By Status")){
+                String status = request.getParameter("status");
+                where += " AND status = '" + status + "' ";
+                request.setAttribute("filterStatus", status);
+            }
         }
-        if(request.getAttribute("developer") != null){
-            String developer = (String) request.getAttribute("developer");
-            where += " AND developer = '" + developer + "' ";
-            request.setAttribute("filterDeveloper", developer);
+        if (request.getParameterMap().containsKey("developer")) {
+            if(!request.getParameter("developer").equals("By Developer")){
+                String developer = request.getParameter("developer");
+                where += " AND developer = '" + developer + "' ";
+                request.setAttribute("filterDeveloper", developer);
+            }
         }
-        if(request.getAttribute("dateMin") != null && request.getAttribute("dateMax") != null){
-            
-            where += " AND date BETWEEN " + request.getAttribute("dateMin") + "AND " + request.getAttribute("dateMax");
+        if(request.getParameterMap().containsKey("dateMin") && request.getParameterMap().containsKey("dateMax")) {
+            if(request.getParameter("dateMin")!= null && request.getParameter("dateMax")!= null){
+                String dateMin = request.getParameter("dateMin");
+                String dateMax = request.getParameter("dateMax");
+                where += " AND date BETWEEN " + request.getAttribute("dateMin") + "AND " + request.getAttribute("dateMax");
+            }
         }
-        if(request.getAttribute("perPage") != null){
-             perPage = (int)request.getAttribute("perPage");
-             pageNumber = (int)request.getAttribute("pageNumber");
-             limitPerPage += (perPage * (pageNumber- 1)) + ", " + perPage;
+        if (request.getParameterMap().containsKey("pageNumber")) {
+            pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        }
+        if (request.getParameterMap().containsKey("perPage")) {
+            if(!request.getParameter("perPage").equals("View All") && !request.getParameter("perPage").equals("View Per Page")){
+                perPage = Integer.parseInt(request.getParameter("perPage"));
+            }
+            else if(request.getParameter("perPage").equals("View All")){
+                DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
+                if(request.getSession().getAttribute("Client") != null){
+                    username = (String)request.getSession().getAttribute("Client");
+                    where = " sender_name= '" + username + "' ";
+                }
+                else if(request.getSession().getAttribute("Developer") != null){
+                    username = (String)request.getSession().getAttribute("Developer");
+                    where = " developer= '" + username + "' ";
+                }
+                
+                perPage = displayTicketsDao.numOfTickets(where);
+            }
+            limitPerPage += (perPage * (pageNumber- 1)) + ", " + perPage;
         }
         else
         {
             limitPerPage += perPage;
         }
+        
         
         DisplayTicketsDao displayTicketsDao = new DisplayTicketsDao();
         

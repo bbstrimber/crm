@@ -18,6 +18,7 @@ public class AttachmentBean implements Serializable{
     private InputStream attachment;
     private String attachmentName;
     private int ticketId;
+    private String attachmentType;
     
     public int getId() {
         return id;
@@ -49,6 +50,14 @@ public class AttachmentBean implements Serializable{
 
     public void setTicketId(int ticketId) {
         this.ticketId = ticketId;
+    }
+
+    public String getAttachmentType() {
+        return attachmentType;
+    }
+
+    public void setAttachmentType(String attachmentType) {
+        this.attachmentType = attachmentType;
     }
    
     

@@ -23,7 +23,7 @@ import utils.DBConnection;
  * @author Blumie
  */
 @WebServlet("/attachments/*")
-public class AttachmentServlet extends HttpServlet {
+public class RetrieveAttachmentServlet extends HttpServlet {
 
     private static final String SQL_FIND = "SELECT attachment FROM attachments WHERE attachment_name = ?";
 

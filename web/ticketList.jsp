@@ -72,7 +72,7 @@
             <br>
             <fieldset>
                 <div class="row">
-                    <form class="form col-sm-3" method="POST" action="Filter" name="filter">
+                    <form class="form col-sm-3" method="POST" action="Tickets" name="filter">
                         <div class="form-group">
                             <input type="hidden" name="perPage" value="${perPage}"/>
                             <select class="form-control" id="status" name="status" onchange="this.form.submit()">
@@ -84,7 +84,7 @@
                             </select>
                         </div>
                     </form>
-                    <form class="form col-sm-3" method="POST" action="Filter" name="filter">
+                    <form class="form col-sm-3" method="POST" action="Tickets" name="filter">
                     <div class="form-group">
                         <input type="hidden" name="perPage" value="${perPage}"/>
                         <select class="form-control" id="developer" name="developer" onchange="this.form.submit()">
@@ -95,7 +95,7 @@
                         </select>
                     </div>
                     </form>
-                    <form class="form col-sm-3" method="POST" action="Filter" name="filter">
+                    <form class="form col-sm-3" method="POST" action="Tickets" name="filter">
                     <div class="form-group">
                         <c:choose>
                             <c:when test="${filterStatus != null}">
@@ -129,12 +129,12 @@
                 <thead class="thead-light">
 
                     <tr>
-                        <th scope="col"><a href="Sort?sort=id&perPage=${perPage}">Id</a></th>
-                        <th scope="col"><a href="Sort?sort=priority&perPage=${perPage}">Priority</a></th>
-                        <th scope="col"><a href="Sort?sort=date&perPage=${perPage}">Date</a></th>
-                        <th scope="col"><a href="Sort?sort=title&perPage=${perPage}">Title</a></th>
-                        <th scope="col"><a href="Sort?sort=status&perPage=${perPage}">Status</a></th>
-                        <th scope="col"><a href="Sort?sort=developer&perPage=${perPage}">Developer</a></th>
+                        <th scope="col"><a href="Tickets?sort=id&perPage=${perPage}">Id</a></th>
+                        <th scope="col"><a href="Tickets?sort=priority&perPage=${perPage}">Priority</a></th>
+                        <th scope="col"><a href="Tickets?sort=date&perPage=${perPage}">Date</a></th>
+                        <th scope="col"><a href="Tickets?sort=title&perPage=${perPage}">Title</a></th>
+                        <th scope="col"><a href="Tickets?sort=status&perPage=${perPage}">Status</a></th>
+                        <th scope="col"><a href="Tickets?sort=developer&perPage=${perPage}">Developer</a></th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -144,20 +144,17 @@
                     <tr>
                         <td>${ticket.getId()}</td>
                         <td>
-                            <a href="#" data-toggle="tooltip" title="${ticket.getPriority()}">
                             <c:choose>
                                 <c:when test="${ticket.getPriority() eq 'Low'}">
-                                    <i class="far fa-flag fa-lg " style="color: gold"></i>
+                                    <p style="color: gold">${ticket.getPriority()} </p>
                                 </c:when>
                                 <c:when test="${ticket.getPriority() eq 'High'}">
-                                    <i class="fas fa-flag fa-lg" style="color: red"></i>
+                                    <p style="color: red">${ticket.getPriority()} </p>
                                 </c:when>
                                 <c:otherwise>
-                                    <i class="far fa-flag fa-lg" style="color: #419641"></i>
+                                    <p style="color: #419641">${ticket.getPriority()} </p>
                                 </c:otherwise>
                             </c:choose>
-                            </a>
-                            <p class="text-muted">${ticket.getPriority()}</p>
                         </td>
                         <td><fmt:formatDate value="${ticket.getDate()}" pattern="MM/dd/yyyy"/></td>
                         <td>${ticket.getTitle()}</td>

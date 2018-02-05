@@ -5,7 +5,7 @@
     <nav aria-label="pagination for tickets">
         <ul class="pagination">
             <c:if test="${pageNumber != 1}">
-                <c:url var="myURLPrevious" value="Pagination?perPage=${perPage}&pageNumber=${pageNumber-1}&sort=${sort}">
+                <c:url var="myURLPrevious" value="Tickets?perPage=${perPage}&pageNumber=${pageNumber-1}&sort=${sort}">
                     <c:choose>
                         <c:when test="${filterDeveloper != null}">
                             <c:param name="developer" value="${filterDeveloper}"/>
@@ -30,7 +30,7 @@
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <c:url var="myURLNumber" value="Pagination?perPage=${perPage}&pageNumber=${i}&sort=${sort}">
+                        <c:url var="myURLNumber" value="Tickets?perPage=${perPage}&pageNumber=${i}&sort=${sort}">
                             <c:choose>
                                 <c:when test="${filterDeveloper != null}">
                                     <c:param name="developer" value="${filterDeveloper}"/>
@@ -49,7 +49,7 @@
             </c:forEach>
 
             <c:if test="${pageNumber lt numOfPages}">
-                <c:url var="myURLNext" value="Pagination?perPage=${perPage}&pageNumber=${pageNumber+1}&sort=${sort}">
+                <c:url var="myURLNext" value="Tickets?perPage=${perPage}&pageNumber=${pageNumber+1}&sort=${sort}">
                     <c:choose>
                         <c:when test="${filterDeveloper != null}">
                             <c:param name="developer" value="${filterDeveloper}"/>
