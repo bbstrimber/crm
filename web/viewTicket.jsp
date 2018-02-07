@@ -43,6 +43,14 @@
                     x.style.display = "none";
                 }
             }
+            function showEditPriorityForm() {
+                var x = document.getElementById("editPriorityForm");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
             
         </script>
         
@@ -50,7 +58,7 @@
         
         <span class="col-sm-offset-1 col-sm-10">
             <h2>Ticket Details</h2>
-            <a href="Pagination?perPage=${perPage}&pageNumber=${pageNumber}&sort=${sort}" type="button" class="btn btn-link" > <span class="glyphicon glyphicon-chevron-left"></span>Back to Ticket List</a>
+            <a href="Tickets?perPage=${perPage}&pageNumber=${pageNumber}&sort=${sort}" type="button" class="btn btn-link" > <span class="glyphicon glyphicon-chevron-left"></span>Back to Ticket List</a>
             <table id="ticketDetails" class="table table-bordered table-responsive">
                 <thead class="thead-light">
                     <tr>
@@ -74,16 +82,35 @@
                         <td class="text-center">
                             <c:choose>
                                 <c:when test="${ticket.getPriority() eq 'Low'}">
-                                    <p style="color: gold">${ticket.getPriority()} </p>
+                                    <h5 style="color: gold">${ticket.getPriority()} </h5>
                                 </c:when>
                                 <c:when test="${ticket.getPriority() eq 'High'}">
-                                    <p style="color: red">${ticket.getPriority()} </p>
+                                    <h5 style="color: red">${ticket.getPriority()} </h5>
                                 </c:when>
                                 <c:otherwise>
-                                    <p style="color: #419641">${ticket.getPriority()} </p>
+                                    <h5 style="color: #419641">${ticket.getPriority()} </h5>
                                 </c:otherwise>
                             </c:choose>
-                            
+                            <c:if test="${Client == null}">
+                                <button type="button" class="btn btn-default btn-sm" onclick="showEditPriorityForm()">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <form action="UpdateTicket" class="form" method="POST" id="editPriorityForm" style="display:none">
+                                    <input type="hidden" name="id" value=${ticket.getId()}>
+                                    <input type="hidden" name="perPage" value=${perPage}>
+                                    <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                    <input type="hidden" name="sort" value=${sort}>
+                                    <div class="form-group">
+                                        <select class="form-control input-sm" id="priorityList" name="priority">
+                                            <option disabled selected>Edit Priority</option>
+                                            <option style="color: gold">Low</option>
+                                            <option style="color: #419641">Medium</option>
+                                            <option style="color: red">High</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="editPrioritySubmit">Update</button>
+                                </form>
+                            </c:if>
                         </td>
                         <td>
                             <fmt:formatDate value="${ticket.getDate()}" pattern="MM/dd/yyyy"/>
@@ -95,44 +122,40 @@
                         <td>${ticket.getContent()}</td>
                         <td>
                             ${ticket.getStatus()}
-                            <br>
                             <c:if test="${Client == null}">
                                 <c:if test="${ticket.getStatus() != 'Resolved' || Admin != null}">
-                                    <button type="button" class="btn btn-default btn-sm" onclick="showStatusForm()">
-                                        <i class="fas fa-edit"></i> Update Status
-                                    </button>
-                                    
-                                    <form action="UpdateTicket" method="POST" id="updateStatusForm" style="display:none" >
-                                        <input type="hidden" name="id" value=${ticket.getId()}>
-                                        <input type="hidden" name="perPage" value=${perPage}>
-                                        <input type="hidden" name="pageNumber" value=${pageNumber}>
-                                        <input type="hidden" name="sort" value=${sort}>
-                                        <div class="form-group" >
-                                            <select id="status" name="status" class="form-control input-sm" onchange="showHideSelect()">
-                                                <option selected>Update Status</option>
-                                                <option>Working On</option>
-                                                <option>Resolved</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="updateTicketSubmit">Update</button>
-                                    </form>
+                                    <c:if test="${ticket.getDeveloper() ne 'Unassigned'}">
+                                        <button type="button" class="btn btn-default btn-sm" onclick="showStatusForm()">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+
+                                        <form action="UpdateTicket" method="POST" id="updateStatusForm" style="display:none" >
+                                            <input type="hidden" name="id" value=${ticket.getId()}>
+                                            <input type="hidden" name="perPage" value=${perPage}>
+                                            <input type="hidden" name="pageNumber" value=${pageNumber}>
+                                            <input type="hidden" name="sort" value=${sort}>
+                                            <div class="form-group" >
+                                                <select id="status" name="status" class="form-control input-sm" onchange="showHideSelect()">
+                                                    <option selected>Update Status</option>
+                                                    <option>Working On</option>
+                                                    <option>Resolved</option>
+                                                    <c:if test="${Admin != null}">
+                                                        <option>Closed</option>
+                                                    </c:if>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-default btn-sm" name="updateTicket" id="updateTicketSubmit">Update</button>
+                                        </form>
+                                    </c:if>
                                 </c:if>
                             </c:if>
                         </td>
                         <td>
-                            ${ticket.getDeveloper()}
-                            <br>
+                            ${ticket.getDeveloper()} 
                             <c:if test="${Admin != null}">
                                 <button type="button" class="btn btn-default btn-sm" onclick="showAssignForm()">
                                     <i class="fas fa-edit"></i> 
-                                    <c:choose>
-                                        <c:when test="${ticket.getStatus() eq 'new'}">
-                                          Assign to Developer
-                                        </c:when>
-                                        <c:otherwise>
-                                            Switch Developer
-                                        </c:otherwise>
-                                    </c:choose>
+                                    
                                 </button>
                                 <form action="UpdateTicket" class="form" method="POST" id="assignForm" style="display:none">
                                     <input type="hidden" name="id" value=${ticket.getId()}>
@@ -141,7 +164,15 @@
                                     <input type="hidden" name="sort" value=${sort}>
                                     <div class="form-group">
                                         <select class="form-control input-sm" id="developerList" name="developer">
-                                            <option disabled selected>Assign to Developer</option>
+                                            <c:choose>
+                                                <c:when test="${ticket.getStatus() eq 'new'}">
+                                                    <option disabled selected>Assign to Developer</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option disabled selected>Reassign Developer</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            
                                             <c:forEach items="${developers}" var="developer">
                                                 <option>${developer}</option>
                                             </c:forEach>
@@ -187,12 +218,11 @@
                                 
                                 </c:when>
                                 <c:otherwise>
-                                No Attachment
+                                No Attachment 
                                 </c:otherwise>
                             </c:choose>
-                            <br>
-                            <button type="button" class="btn btn-default btn-sm" onclick="showAttachmentForm()">
-                                <i class="glyphicon glyphicon-circle-arrow-up"></i> Add Attachment
+                             <button type="button" class="btn btn-default btn-sm" onclick="showAttachmentForm()">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i>
                             </button>
                             <form action="AddAttachment" method="POST" enctype="multipart/form-data" id="addAttachmentForm"  style="display:none">
                                 <input type="hidden" name="id" value=${ticket.getId()}>

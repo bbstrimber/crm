@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Ticket List</title>
+        <title>Tickets</title>
         <%@ include file="/WEB-INF/jspf/header.jspf" %> 
     </head>
     <body>
@@ -47,9 +47,9 @@
                                     <label for="priority" class="control-label col-sm-2">Priority</label>
                                     <div class="col-sm-8">
                                         <select class="form-control" id="priority" name="priority">
-                                            <option selected>Medium</option>
-                                            <option>Low</option>
-                                            <option>High</option>
+                                            <option style="color: gold">Low</option>
+                                            <option selected style="color: #419641">Medium</option>
+                                            <option style="color: red">High</option>
                                         </select>
                                     </div>
                                 </div>
